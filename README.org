@@ -1,0 +1,19 @@
+#+title: Project Analysis
+
+* Main Operations:
+
+** Load dataset from the files
+
+*** 3 classes to implement
+
++ Class :: aula de uma determinada UC
++ Schedule ::
++ Student :: aluno tem um nome e um Schedule
+
+*** Input Functions
+
+** Read input filters from Command Line
+
+** Filter the dataset
+
+** Output the filtered data
