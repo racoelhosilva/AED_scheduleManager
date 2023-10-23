@@ -1,0 +1,32 @@
+#+title: Projeto
+
+* Decrição dos Passos
+
+1) main cria a interface inicial
+2) interface inicial para decidir que ficheiros abrir
+3) criar o gestor de horários e ler os ficheiros
+4) imprimir o menu inicial para decidir as opções:
+   + Horários
+     + Horário dado o aluno
+     + Horário dada a turma
+     + Horário dada a cadeira
+   + Listagens
+     + Listar Turmas
+       + Dada a UC
+     + Listar Alunos
+       + Dada a UC
+       + Dada a UC+Turma
+     + Listar Cadeiras
+       + Dado o Ano
+     + Estudantes com + de n UCs
+   + Ocupações
+     + Ocupação Turma
+     + Ocupação Ano
+     + Ocupação Cadeiras
+     + Cadeira c/+ Alunos
+   + Alterações
+     - Verificar se cria problemas
+     + Remover um estudante
+     + Acrescentar um estudante
+     + Trocar um estudante
+   + Sair
