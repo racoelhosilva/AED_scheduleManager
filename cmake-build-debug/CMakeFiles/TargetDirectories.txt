@@ -1,3 +1,0 @@
-/home/rodrigo/Documents/AED/projects/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/AED2324_PRJ1_G15.dir
-/home/rodrigo/Documents/AED/projects/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/rodrigo/Documents/AED/projects/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/rebuild_cache.dir
