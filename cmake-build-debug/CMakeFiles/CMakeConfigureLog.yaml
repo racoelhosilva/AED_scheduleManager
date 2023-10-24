@@ -4,6 +4,12 @@ events:
   -
     kind: "message-v1"
     backtrace:
+<<<<<<< HEAD
+      - "/home/oxi-moron/IDEA/clion-2023.2.2/bin/cmake/linux/x64/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 6.5.5-1-MANJARO - x86_64
+=======
       - "/home/ricardo/FEUP/AED/CLion-2023.2.2/clion-2023.2.2/bin/cmake/linux/x64/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
@@ -458,4 +464,5 @@ events:
         implicit fwks: []
       
       
+>>>>>>> e9574501dd6961aa9ed265a7e7f8080af5c06ea2
 ...
