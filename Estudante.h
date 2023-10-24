@@ -3,22 +3,23 @@
 
 #include <string>
 #include <list>
+#include "Turma.h"
 
 using namespace std;
 
 class Estudante {
-private:
-    int studentID;
-    string studentName;
-    list<Turma> schedule;
-public:
-    Estudante(int id, string name, list<pair<string,string>> classes) : studentID(id), studentName(name);
+    private:
+        int studentID;
+        string studentName;
+        list<Turma> schedule;
+    public:
+        Estudante(int id, string name, list<pair<string,string>> classes);
 
-    int const getID();
-    string const getName();
-    list<Turma> const getSchedule();
+        int const getID();
+        string const getName();
+        list<Turma> const getSchedule();
 
-    void setSchedule(list<Turma> newSchedule) const;
+        void setSchedule(list<Turma> newSchedule);
 };
 
 

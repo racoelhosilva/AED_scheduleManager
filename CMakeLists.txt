@@ -8,4 +8,8 @@ add_executable(AED2324_PRJ1_G15 main.cpp
         Aula.h
         Turma.cpp
         Turma.h
+        Estudante.h
+        Estudante.cpp
+        Estudante.cpp
+        Estudante.cpp
 )
