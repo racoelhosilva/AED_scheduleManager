@@ -1,0 +1,10 @@
+#ifndef AED2324_PRJ1_G15_INTERFACE_H
+#define AED2324_PRJ1_G15_INTERFACE_H
+
+
+class Interface {
+
+};
+
+
+#endif //AED2324_PRJ1_G15_INTERFACE_H

@@ -67,6 +67,30 @@ build CMakeFiles/AED2324_PRJ1_G15.dir/Turma.cpp.o: CXX_COMPILER__AED2324_PRJ1_G1
   OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
   OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
 
+build CMakeFiles/AED2324_PRJ1_G15.dir/Estudante.cpp.o: CXX_COMPILER__AED2324_PRJ1_G15_unscanned_Debug /home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/Estudante.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G15
+  DEP_FILE = CMakeFiles/AED2324_PRJ1_G15.dir/Estudante.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+  OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+
+build CMakeFiles/AED2324_PRJ1_G15.dir/Gestor.cpp.o: CXX_COMPILER__AED2324_PRJ1_G15_unscanned_Debug /home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/Gestor.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G15
+  DEP_FILE = CMakeFiles/AED2324_PRJ1_G15.dir/Gestor.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+  OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+
+build CMakeFiles/AED2324_PRJ1_G15.dir/Interface.cpp.o: CXX_COMPILER__AED2324_PRJ1_G15_unscanned_Debug /home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/Interface.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G15
+  DEP_FILE = CMakeFiles/AED2324_PRJ1_G15.dir/Interface.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+  OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+
+build CMakeFiles/AED2324_PRJ1_G15.dir/Pedido.cpp.o: CXX_COMPILER__AED2324_PRJ1_G15_unscanned_Debug /home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/Pedido.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G15
+  DEP_FILE = CMakeFiles/AED2324_PRJ1_G15.dir/Pedido.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+  OBJECT_FILE_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target AED2324_PRJ1_G15
@@ -75,7 +99,7 @@ build CMakeFiles/AED2324_PRJ1_G15.dir/Turma.cpp.o: CXX_COMPILER__AED2324_PRJ1_G1
 #############################################
 # Link the executable AED2324_PRJ1_G15
 
-build AED2324_PRJ1_G15: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G15_Debug CMakeFiles/AED2324_PRJ1_G15.dir/main.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Aula.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Turma.cpp.o
+build AED2324_PRJ1_G15: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G15_Debug CMakeFiles/AED2324_PRJ1_G15.dir/main.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Aula.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Turma.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Estudante.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Gestor.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Interface.cpp.o CMakeFiles/AED2324_PRJ1_G15.dir/Pedido.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/AED2324_PRJ1_G15.dir
   POST_BUILD = :

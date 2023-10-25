@@ -1,0 +1,10 @@
+#ifndef AED2324_PRJ1_G15_PEDIDO_H
+#define AED2324_PRJ1_G15_PEDIDO_H
+
+
+class Pedido {
+
+};
+
+
+#endif //AED2324_PRJ1_G15_PEDIDO_H

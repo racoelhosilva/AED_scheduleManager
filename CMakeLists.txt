@@ -12,4 +12,10 @@ add_executable(AED2324_PRJ1_G15 main.cpp
         Estudante.cpp
         Estudante.cpp
         Estudante.cpp
+        Gestor.cpp
+        Gestor.h
+        Interface.cpp
+        Interface.h
+        Pedido.cpp
+        Pedido.h
 )

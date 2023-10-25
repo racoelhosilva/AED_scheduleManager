@@ -18,3 +18,8 @@ list<Aula> Turma::getAulas() const {
     return aulas;
 }
 
+void Turma::addAulas(const Aula& aula) {
+    aulas.push_back(aula);
+}
+
+
