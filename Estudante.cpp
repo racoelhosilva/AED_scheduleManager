@@ -1,11 +1,9 @@
 #include "Estudante.h"
 
-Estudante::Estudante(int id, string name, list<pair<string,string>> classes) {
+Estudante::Estudante(int id, string name, list<Turma> classes) {
     studentID = id;
     studentName = name;
-    for (pair<string, string> t : classes) {
-        schedule.push_back(Turma(t.first, t.second));
-    }
+    schedule = classes;
 }
 
 int const Estudante::getID() {return studentID;}
