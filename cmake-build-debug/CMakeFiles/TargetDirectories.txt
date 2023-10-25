@@ -1,3 +1,3 @@
-/home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/AED2324_PRJ1_G15.dir
-/home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/oxi-moron/LEIC/AED/PROJETO/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/AED2324_PRJ1_G15.dir
+/home/oxi-moron/LEIC/AED/PROJETO/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/oxi-moron/LEIC/AED/PROJETO/AED2324_PRJ1_G15/cmake-build-debug/CMakeFiles/rebuild_cache.dir

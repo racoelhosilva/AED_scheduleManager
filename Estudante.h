@@ -13,13 +13,14 @@ class Estudante {
         string studentName;
         list<Turma> schedule;
     public:
-        Estudante(int id, string name, list<Turma> classes);
+        Estudante(int id, string name, list<Turma> classes = {});
 
         int const getID();
         string const getName();
         list<Turma> const getSchedule();
 
         void setSchedule(list<Turma> newSchedule);
+        // method add to schedule
 };
 
 

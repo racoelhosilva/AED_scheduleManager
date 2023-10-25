@@ -1,4 +1,4 @@
-# Install script for directory: /home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15
+# Install script for directory: /home/oxi-moron/LEIC/AED/PROJETO/AED2324_PRJ1_G15
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ricardo/FEUP/AED/Projeto1/AED2324_PRJ1_G15/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/oxi-moron/LEIC/AED/PROJETO/AED2324_PRJ1_G15/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
