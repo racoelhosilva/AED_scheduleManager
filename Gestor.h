@@ -31,6 +31,10 @@ public:
     void outputListaEstudanteNUC(int n, int order);
     void outputListaEstudanteMaisNUC(int n, int order);
 
+    bool outputOcupaçãoTurma(string codigoTurma);
+    bool outputOcupaçãoUC(string codigoUC);
+    bool outputOcupaçãoAno(int ano);
+
     void saveChanges(string fname);
 
     // Testing Functions for the extracts

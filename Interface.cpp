@@ -412,7 +412,83 @@ int Interface::orderMenu() {
 
 }
 
-void Interface::occupationMenu(){return;}
+void Interface::occupationMenu(){
+    cout << "Que ocupações pretende ver?\n";
+    cout << "\t1. Turma\t\t2. Unidade Curricular\t\t3. Ano\t\t4. Voltar\n";
+    cout << "Opção: ";
+    string actionOption;
+    cin >> actionOption;
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4"){
+        cout << "Input inválido. Opção: ";
+        cin >> actionOption;
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+
+    switch(stoi(actionOption)){
+        case 1:{
+            string codigoTurma;
+            cout << "Código da Turma (ex. 1LEIC00): ";
+            cin >> codigoTurma;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurma.length() != 7 || (codigoTurma[0] < '1' || codigoTurma[0] > '3')){
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurma;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            if (!gestor.outputOcupaçãoTurma(codigoTurma)){
+                cout << "Turma não encontrada!";
+                this->occupationMenu();
+            }
+            this->inputWait();
+            break;}
+        case 2:{
+            string codigoUC;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUC;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L'){
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUC;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            if (!gestor.outputOcupaçãoUC(codigoUC)){
+                cout << "Unidade Curricular não encontrada!";
+                this->occupationMenu();
+            }
+            this->inputWait();
+            break;}
+        case 3:{
+            int ano;
+            cout << "\"Listagens de Unidades Curriculares\" selecionada!\n";
+            cout << "Ano (ex. 1): ";
+            cin >> ano;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (ano < 1 || ano > 3){
+                cout << "Input inválido. Ano: ";
+                cin >> ano;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            gestor.outputOcupaçãoAno(ano);
+            this->inputWait();
+            break;}
+
+        default:{
+            cout << "\"Voltar\" selecionado!\n";
+            break;}
+    }
+
+    this->footer();
+    this->mainMenu();
+}
 
 void Interface::requestMenu(){return;}
 
