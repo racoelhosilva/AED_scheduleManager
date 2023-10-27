@@ -6,10 +6,17 @@
 class Interface {
 private:
     Gestor gestor;
+    bool alteraçõesFeitas = false;
 
+    void header();
+    void footer();
 public:
+    // Reading Files
     void startMenu();
-
+    // Operations
+    void mainMenu();
+    // Saving and Exit
+    void closeMenu();
 };
 
 

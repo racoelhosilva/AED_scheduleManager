@@ -20,6 +20,9 @@ public:
     void extractEstudantes(string fname);
 
 
+
+    void saveChanges(string fname);
+
     // Testing Functions for the extracts
     void outputAllTurmas();
     void outputAllAulas();

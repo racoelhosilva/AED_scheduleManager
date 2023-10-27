@@ -113,3 +113,7 @@ void Gestor::outputAllEstudantes() {
     }
 
 }
+
+void Gestor::saveChanges(string fname) {
+    cout << "Saving file!\n";
+}
