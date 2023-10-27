@@ -392,7 +392,7 @@ void Interface::listingStudentsUCMenu() {
             break;}
     }
 
-    this->listingMenu()
+    this->listingMenu();
 }
 int Interface::orderMenu() {
     cout << "Que tipo de ordem pretende?\n";
