@@ -99,10 +99,9 @@ void Interface::mainMenu() {
             break;
         default:
             cout << "\"Sair\" selecionado!\n\n";
-            return;
+            this->footer();
+            this->closeMenu();
     }
-
-    this->footer();
 }
 
 void Interface::scheduleMenu() {
@@ -519,4 +518,5 @@ void Interface::closeMenu() {
     }
 
     cout << "Obrigado por usar o Gestor de Horários.\n";
+    exit(0);
 }

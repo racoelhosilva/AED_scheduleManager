@@ -33,11 +33,11 @@ public:
 
     bool outputOcupaçãoTurma(string codigoTurma);
     bool outputOcupaçãoUC(string codigoUC);
-    bool outputOcupaçãoAno(int ano);
+    void outputOcupaçãoAno(int ano);
 
     void saveChanges(string fname);
 
-    // Testing Functions for the extracts
+    // Testing Functions for the extracts and output
     void outputAllTurmas();
     void outputAllAulas();
     void outputAllEstudantes();

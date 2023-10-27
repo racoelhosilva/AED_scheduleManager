@@ -109,13 +109,18 @@ bool Gestor::outputHorárioUC(string codigoUC){
     return true;
 }
 
-bool Gestor::outputListaEstudantes(string codigoUC, string codigoTurma){return true;}
+bool Gestor::outputListaEstudanteTurma(string codigoTurma, int order){return true;}
+bool Gestor::outputListaEstudanteUC(string codigoUC, int order){return true;}
+void Gestor::outputListaEstudanteAno(int ano, int order){return;}
 bool Gestor::outputListaTurmas(string codigoUC){return true;}
-bool Gestor::outputListaUC(int ano){return true;}
+void Gestor::outputListaUC(int ano){return;}
 
 void Gestor::outputListaEstudanteNUC(int n, int order){return;}
 void Gestor::outputListaEstudanteMaisNUC(int n, int order){return;}
 
+bool Gestor::outputOcupaçãoTurma(string codigoTurma){return true;}
+bool Gestor::outputOcupaçãoUC(string codigoUC){return true;}
+void Gestor::outputOcupaçãoAno(int ano) {return;}
 
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {
