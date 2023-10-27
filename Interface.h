@@ -10,11 +10,39 @@ private:
 
     void header();
     void footer();
+    void inputWait();
 public:
     // Reading Files
-    void startMenu();
+    bool startMenu();
+
     // Operations
     void mainMenu();
+
+    // Schedules
+    void scheduleMenu();
+
+    // Listings
+    void listingMenu();
+    void listingStudentsMenu();
+    void listingStudentsUCMenu();
+
+    //Order
+    int orderMenu();
+
+    /*
+     * 1 = Alfabética
+     * 2 = Alfabética Inversa
+     * 3 = Numérica
+     * 4 = Numérica Inversa
+     */
+
+
+    // Occupations
+    void occupationMenu();
+
+    // Requests
+    void requestMenu();
+
     // Saving and Exit
     void closeMenu();
 };

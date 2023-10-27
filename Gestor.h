@@ -15,11 +15,21 @@ private:
 
 public:
 
-    void extractTurmas(string fname);
-    void extractAulas(string fname);
-    void extractEstudantes(string fname);
+    bool extractTurmas(string fname);
+    bool extractAulas(string fname);
+    bool extractEstudantes(string fname);
 
+    bool outputHorárioEstudante(int id);
+    bool outputHorárioTurma(string codigoTurma);
+    bool outputHorárioUC(string codigoUC);
 
+    bool outputListaEstudanteTurma(string codigoTurma, int order);
+    bool outputListaEstudanteUC(string codigoUC, int order);
+    void outputListaEstudanteAno(int ano, int order);
+    bool outputListaTurmas(string codigoUC);
+    void outputListaUC(int ano);
+    void outputListaEstudanteNUC(int n, int order);
+    void outputListaEstudanteMaisNUC(int n, int order);
 
     void saveChanges(string fname);
 

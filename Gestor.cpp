@@ -1,22 +1,31 @@
 #include "Gestor.h"
 
-void Gestor::extractTurmas(string fname) {
+bool Gestor::extractTurmas(string fname) {
     ifstream fileReader(fname);
     string line;
-    getline(fileReader, line);
+
+    if (!getline(fileReader, line)){
+        return false;
+    }
+
     while (getline(fileReader, line)) {
         istringstream fieldReader(line);
         string ucID, classID;
         getline(fieldReader, ucID, ',');
         getline(fieldReader, classID, '\r');
-        turmas.push_back(Turma(ucID, classID));
+        turmas.emplace_back(ucID, classID);
     }
+    return true;
 }
 
-void Gestor::extractAulas(string fname) {
+bool Gestor::extractAulas(string fname) {
     ifstream fileReader(fname);
     string line;
-    getline(fileReader, line);
+
+    if (!getline(fileReader, line)){
+        return false;
+    }
+
     while (getline(fileReader, line)) {
         istringstream fieldReader(line);
         string classID, ucID, weekday, type;
@@ -33,14 +42,19 @@ void Gestor::extractAulas(string fname) {
             }
         }
     }
+    return true;
 }
 
-void Gestor::extractEstudantes(string fname) {
+bool Gestor::extractEstudantes(string fname) {
     ifstream fileReader(fname);
     string line;
-    getline(fileReader, line);
 
-    int id, idOLD; string name, ucID, classID;
+    if (!getline(fileReader, line)){
+        return false;
+    }
+
+    int id, previousId;
+    string name, ucID, classID;
 
     getline(fileReader, line);
     istringstream fieldReader(line);
@@ -50,7 +64,7 @@ void Gestor::extractEstudantes(string fname) {
     getline(fieldReader, ucID, ',');
     getline(fieldReader, classID, '\r');
     Estudante currentEstudante = Estudante(id, name);
-    idOLD = id;
+    previousId = id;
     list<Turma> turmasEstudante = {};
     for (Turma &T : turmas) {
         if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
@@ -64,12 +78,12 @@ void Gestor::extractEstudantes(string fname) {
         getline(fieldReader, name, ',');
         getline(fieldReader, ucID, ',');
         getline(fieldReader, classID, '\r');
-        if (id != idOLD) {
+        if (id != previousId) {
             currentEstudante.setSchedule(turmasEstudante);
             estudantes.push_back(currentEstudante);
             currentEstudante = Estudante(id, name);
             turmasEstudante = {};
-            idOLD = id;
+            previousId = id;
         }
         for (Turma &T : turmas) {
             if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
@@ -79,9 +93,28 @@ void Gestor::extractEstudantes(string fname) {
     }
     currentEstudante.setSchedule(turmasEstudante);
     estudantes.push_back(currentEstudante);
+
+    return true;
 }
 
+bool Gestor::outputHorárioEstudante(int id){
+    return true;
+}
 
+bool Gestor::outputHorárioTurma(string codigoTurma){
+    return true;
+}
+
+bool Gestor::outputHorárioUC(string codigoUC){
+    return true;
+}
+
+bool Gestor::outputListaEstudantes(string codigoUC, string codigoTurma){return true;}
+bool Gestor::outputListaTurmas(string codigoUC){return true;}
+bool Gestor::outputListaUC(int ano){return true;}
+
+void Gestor::outputListaEstudanteNUC(int n, int order){return;}
+void Gestor::outputListaEstudanteMaisNUC(int n, int order){return;}
 
 
 // Testing Functions for the extract
@@ -115,5 +148,5 @@ void Gestor::outputAllEstudantes() {
 }
 
 void Gestor::saveChanges(string fname) {
-    cout << "Saving file!\n";
+    cout << "Alterações guardadas!\n";
 }
