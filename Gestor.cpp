@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "Gestor.h"
 #include <set>
+#include <map>
 
 // Comparison operators
 struct EstudanteAlphaAscending {
@@ -415,9 +416,64 @@ void Gestor::outputListaEstudanteMaisNUC(int n, int order){
     }
 }
 
-bool Gestor::outputOcupaçãoTurma(string codigoTurma){return true;}
-bool Gestor::outputOcupaçãoUC(string codigoUC){return true;}
-void Gestor::outputOcupaçãoAno(int ano) {return;}
+bool Gestor::outputOcupaçãoTurma(string codigoTurma){
+    if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
+        return false;
+    map<string, int> occupations;
+    for (Turma t : turmas) {
+        if (t.getcodigoTurma() == codigoTurma)
+            occupations.insert({t.getcodigoUC(), 0});
+    }
+    for (Estudante e : estudantes) {
+        for (Turma t : e.getSchedule()) {
+            if (t.getcodigoTurma() == codigoTurma)
+                occupations[t.getcodigoUC()] += 1;
+        }
+    }
+
+    for (auto occupation : occupations) {
+        cout << occupation.first << " " << occupation.second << " estudantes" << "\n";
+    }
+    return true;
+}
+bool Gestor::outputOcupaçãoUC(string codigoUC){
+    if(find_if(turmas.begin(), turmas.end(), [codigoUC](const Turma& t) {return t.getcodigoUC() == codigoUC;}) == turmas.end())
+        return false;
+    map<string, int> occupations;
+    for (Turma t : turmas) {
+        if (t.getcodigoUC() == codigoUC)
+            occupations.insert({t.getcodigoTurma(), 0});
+    }
+    for (Estudante e : estudantes) {
+        for (Turma t : e.getSchedule()) {
+            if (t.getcodigoUC() == codigoUC)
+                occupations[t.getcodigoTurma()] += 1;
+        }
+    }
+
+    for (auto occupation : occupations) {
+        cout << occupation.first << " " << occupation.second << " estudantes" << "\n";
+    }
+    return true;
+}
+void Gestor::outputOcupaçãoAno(int ano) {
+    map<string, int> occupations;
+    for (Turma t : turmas) {
+        if (t.getcodigoTurma()[0] == (char)(ano + '0'))
+            occupations.insert({t.getcodigoUC(), 0});
+    }
+    for (Estudante e : estudantes) {
+        for (Turma t : e.getSchedule()) {
+            if (t.getcodigoTurma()[0] == (char)(ano + '0'))
+                occupations[t.getcodigoUC()] += 1;
+        }
+    }
+
+    for (auto occupation : occupations) {
+        cout << occupation.first << " " << occupation.second << " estudantes" << "\n";
+    }
+
+}
 
 bool Gestor::pedidoRemoção(int id, string codigoTurma){return true;}
 bool Gestor::pedidoInserção(int id, string codigoTurma){return true;}
