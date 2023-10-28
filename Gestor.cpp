@@ -122,6 +122,10 @@ bool Gestor::outputOcupaçãoTurma(string codigoTurma){return true;}
 bool Gestor::outputOcupaçãoUC(string codigoUC){return true;}
 void Gestor::outputOcupaçãoAno(int ano) {return;}
 
+bool Gestor::pedidoRemoção(int id, string codigoTurma){return true;}
+bool Gestor::pedidoInserção(int id, string codigoTurma){return true;}
+bool Gestor::pedidoTroca(int id, string codigoTurmaAtual, string codigoTurmaNova) {return true;}
+
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {
     for (Turma t : turmas){

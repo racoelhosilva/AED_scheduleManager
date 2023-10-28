@@ -29,7 +29,7 @@ public:
     //Order
     int orderMenu();
 
-    /*
+    /* Orders:
      * 1 = Alfabética
      * 2 = Alfabética Inversa
      * 3 = Numérica

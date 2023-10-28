@@ -31,9 +31,22 @@ public:
     void outputListaEstudanteNUC(int n, int order);
     void outputListaEstudanteMaisNUC(int n, int order);
 
+    /* Orders:
+     * 1 = Alfabética
+     * 2 = Alfabética Inversa
+     * 3 = Numérica
+     * 4 = Numérica Inversa
+     */
+
     bool outputOcupaçãoTurma(string codigoTurma);
     bool outputOcupaçãoUC(string codigoUC);
     void outputOcupaçãoAno(int ano);
+
+    // Falta função para verificar se pode trocar
+    bool pedidoRemoção(int id, string codigoTurma);
+    bool pedidoInserção(int id, string codigoTurma);
+    bool pedidoTroca(int id, string codigoTurmaAtual, string codigoTurmaNova);
+
 
     void saveChanges(string fname);
 

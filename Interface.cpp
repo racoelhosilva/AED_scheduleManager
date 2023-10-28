@@ -16,7 +16,7 @@ void Interface::footer() {
 }
 void Interface::inputWait() {
     string discard;
-    cout << "\t\t\t\tEscreva algo e pressione <Enter> para continuar";
+    cout << "\t\t\t\tEscreva algo e pressione <Enter> para continuar\t\t\t\t\t\t\t\t";
     cin >> discard;
     cin.clear();
     cin.ignore(INT_MAX, '\n');
@@ -489,7 +489,132 @@ void Interface::occupationMenu(){
     this->mainMenu();
 }
 
-void Interface::requestMenu(){return;}
+void Interface::requestMenu(){
+    cout << "Que alterações pretende fazer?\n";
+    cout << "\t1. Remoção\t\t2. Inserção\t\t3. Troca\t\t4. Voltar\n";
+    cout << "Opção: ";
+    string actionOption;
+    cin >> actionOption;
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4"){
+        cout << "Input inválido. Opção: ";
+        cin >> actionOption;
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+
+    switch (stoi(actionOption)) {
+        case 1:{
+            int id;
+            cout << "Número de Estudante (ex. 200000000): ";
+            cin >> id;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (id <= 200000000 || id >= 209999999){
+                cout << "Input inválido. Número de Estudante: ";
+                cin >> id;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoTurma;
+            cout << "Código da Turma (ex. 1LEIC00): ";
+            cin >> codigoTurma;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurma.length() != 7 || (codigoTurma[0] < '1' || codigoTurma[0] > '3')){
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurma;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            if (!gestor.pedidoRemoção(id, codigoTurma)){
+                cout << "Operação não permitida!";
+                this->requestMenu();
+            }
+            alteraçõesFeitas = true;
+            this->inputWait();
+            break;}
+        case 2:{
+            int id;
+            cout << "Número de Estudante (ex. 200000000): ";
+            cin >> id;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (id <= 200000000 || id >= 209999999){
+                cout << "Input inválido. Número de Estudante: ";
+                cin >> id;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoTurma;
+            cout << "Código da Turma (ex. 1LEIC00): ";
+            cin >> codigoTurma;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurma.length() != 7 || (codigoTurma[0] < '1' || codigoTurma[0] > '3')){
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurma;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            if (!gestor.pedidoInserção(id, codigoTurma)){
+                cout << "Operação não permitida!";
+                this->requestMenu();
+            }
+            alteraçõesFeitas = true;
+            this->inputWait();
+            break;}
+        case 3:{
+            int id;
+            cout << "Número de Estudante (ex. 200000000): ";
+            cin >> id;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (id <= 200000000 || id >= 209999999){
+                cout << "Input inválido. Número de Estudante: ";
+                cin >> id;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoTurmaAtual;
+            cout << "Código da Turma Atual (ex. 1LEIC00): ";
+            cin >> codigoTurmaAtual;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurmaAtual.length() != 7 || (codigoTurmaAtual[0] < '1' || codigoTurmaAtual[0] > '3')){
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurmaAtual;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoTurmaNova;
+            cout << "Código da Nova Turma (ex. 1LEIC00): ";
+            cin >> codigoTurmaNova;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurmaNova.length() != 7 || (codigoTurmaNova[0] < '1' || codigoTurmaNova[0] > '3')){
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurmaNova;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            if (!gestor.pedidoTroca(id, codigoTurmaAtual, codigoTurmaNova)){
+                cout << "Operação não permitida!";
+                this->requestMenu();
+            }
+            alteraçõesFeitas = true;
+            this->inputWait();
+            break;}
+
+        default:{
+            cout << "\"Voltar\" selecionado!\n";
+            break;}
+    }
+
+    this->footer();
+    this->mainMenu();
+}
 
 void Interface::closeMenu() {
     this->header();
