@@ -12,3 +12,10 @@ list<Turma> const Estudante::getSchedule() {return schedule;}
 
 void Estudante::setSchedule(list<Turma> newSchedule) {schedule = newSchedule;}
 
+void Estudante::addToSchedule(Turma t) {
+    schedule.push_back(t);
+};
+
+bool Estudante::operator<(const Estudante& r) const{
+    return studentName < r.studentName;
+}

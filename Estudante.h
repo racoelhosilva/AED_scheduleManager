@@ -20,7 +20,9 @@ class Estudante {
         list<Turma> const getSchedule();
 
         void setSchedule(list<Turma> newSchedule);
-        // method add to schedule
+        void addToSchedule(Turma t);
+
+        bool operator<(const Estudante& r) const;
 };
 
 
