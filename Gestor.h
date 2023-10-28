@@ -50,9 +50,9 @@ public:
     void outputOcupaçãoAno(int ano);
 
     // Falta função para verificar se pode trocar
-    bool pedidoRemoção(int id, string codigoTurma);
-    bool pedidoInserção(int id, string codigoTurma);
-    bool pedidoTroca(int id, string codigoTurmaAtual, string codigoTurmaNova);
+    bool pedidoRemoção(int id, string codigoUC, string codigoTurma);
+    bool pedidoInserção(int id, string codigoUC, string codigoTurma);
+    bool pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova);
     bool desfazerÚltimoPedido();
 
     void saveChanges(string fname);

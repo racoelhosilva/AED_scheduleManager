@@ -519,6 +519,17 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
+            string codigoUC;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUC;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L'){
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUC;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
             string codigoTurma;
             cout << "Código da Turma (ex. 1LEIC00): ";
             cin >> codigoTurma;
@@ -530,7 +541,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoRemoção(id, codigoTurma)){
+            if (!gestor.pedidoRemoção(id, codigoUC, codigoTurma)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
@@ -549,6 +560,17 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
+            string codigoUC;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUC;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L'){
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUC;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
             string codigoTurma;
             cout << "Código da Turma (ex. 1LEIC00): ";
             cin >> codigoTurma;
@@ -560,7 +582,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoInserção(id, codigoTurma)){
+            if (!gestor.pedidoInserção(id, codigoUC, codigoTurma)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
@@ -579,6 +601,17 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
+            string codigoUCAtual;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUCAtual;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoUCAtual.length() != 8 || codigoUCAtual[1] != '.' || codigoUCAtual[0] != 'L'){
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUCAtual;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
             string codigoTurmaAtual;
             cout << "Código da Turma Atual (ex. 1LEIC00): ";
             cin >> codigoTurmaAtual;
@@ -587,6 +620,17 @@ void Interface::requestMenu(){
             while (codigoTurmaAtual.length() != 7 || (codigoTurmaAtual[0] < '1' || codigoTurmaAtual[0] > '3')){
                 cout << "Input inválido. Código da Turma: ";
                 cin >> codigoTurmaAtual;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoUCNova;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUCNova;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoUCNova.length() != 8 || codigoUCNova[1] != '.' || codigoUCNova[0] != 'L'){
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUCNova;
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
@@ -601,7 +645,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoTroca(id, codigoTurmaAtual, codigoTurmaNova)){
+            if (!gestor.pedidoTroca(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
@@ -610,6 +654,10 @@ void Interface::requestMenu(){
             break;}
 
         case 4:{
+            if (alteraçõesFeitas <= 0){
+                cout << "Operação não permitida! Nenhuma alteração realizada.";
+                this->requestMenu();
+            }
             if (!gestor.desfazerÚltimoPedido()){
                 cout << "Operação não permitida!";
                 this->requestMenu();

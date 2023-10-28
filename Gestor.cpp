@@ -481,9 +481,9 @@ void Gestor::outputOcupaçãoAno(int ano) {
 
 }
 
-bool Gestor::pedidoRemoção(int id, string codigoTurma){return true;}
-bool Gestor::pedidoInserção(int id, string codigoTurma){return true;}
-bool Gestor::pedidoTroca(int id, string codigoTurmaAtual, string codigoTurmaNova) {return true;}
+bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){return true;}
+bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){return true;}
+bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {return true;}
 bool Gestor::desfazerÚltimoPedido(){return true;}
 
 // Testing Functions for the extract
