@@ -6,7 +6,7 @@
 class Interface {
 private:
     Gestor gestor;
-    bool alteraçõesFeitas = false;
+    int alteraçõesFeitas = 0;
 
     void header();
     void footer();

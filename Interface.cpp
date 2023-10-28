@@ -491,13 +491,13 @@ void Interface::occupationMenu(){
 
 void Interface::requestMenu(){
     cout << "Que alterações pretende fazer?\n";
-    cout << "\t1. Remoção\t\t2. Inserção\t\t3. Troca\t\t4. Voltar\n";
+    cout << "\t1. Remoção\t\t2. Inserção\t\t3. Troca\t\t4. Anular Última Alteração\t\t5. Voltar\n";
     cout << "Opção: ";
     string actionOption;
     cin >> actionOption;
     cin.clear();
     cin.ignore(INT_MAX, '\n');
-    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4"){
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5"){
         cout << "Input inválido. Opção: ";
         cin >> actionOption;
         cin.clear();
@@ -532,7 +532,7 @@ void Interface::requestMenu(){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
-            alteraçõesFeitas = true;
+            alteraçõesFeitas++;
             this->inputWait();
             break;}
         case 2:{
@@ -562,7 +562,7 @@ void Interface::requestMenu(){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
-            alteraçõesFeitas = true;
+            alteraçõesFeitas++;
             this->inputWait();
             break;}
         case 3:{
@@ -603,10 +603,18 @@ void Interface::requestMenu(){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
-            alteraçõesFeitas = true;
+            alteraçõesFeitas++;
             this->inputWait();
             break;}
 
+        case 4:{
+            if (!gestor.desfazerÚltimoPedido()){
+                cout << "Operação não permitida!";
+                this->requestMenu();
+            }
+            alteraçõesFeitas--;
+            this->inputWait();
+            break;}
         default:{
             cout << "\"Voltar\" selecionado!\n";
             break;}
@@ -619,7 +627,7 @@ void Interface::requestMenu(){
 void Interface::closeMenu() {
     this->header();
 
-    if (alteraçõesFeitas){
+    if (alteraçõesFeitas > 0){
         cout << "Deseja guardar as alterações realizadas?\n";
         cout << "\t\t1. Sim\t\t\t\t2.Não\n";
         cout << "Opção: ";

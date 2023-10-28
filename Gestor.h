@@ -3,7 +3,10 @@
 
 #include "Turma.h"
 #include "Estudante.h"
+#include "Pedido.h"
 #include <vector>
+#include <stack>
+#include <queue>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -12,6 +15,9 @@ class Gestor {
 private:
     vector<Turma> turmas;
     vector<Estudante> estudantes;
+    queue<Pedido> pedidos;
+    stack<Pedido> pedidosRealizados;
+    list<Pedido> pedidosInválidos;
 
 public:
 
@@ -46,7 +52,7 @@ public:
     bool pedidoRemoção(int id, string codigoTurma);
     bool pedidoInserção(int id, string codigoTurma);
     bool pedidoTroca(int id, string codigoTurmaAtual, string codigoTurmaNova);
-
+    bool desfazerÚltimoPedido();
 
     void saveChanges(string fname);
 
