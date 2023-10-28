@@ -468,7 +468,6 @@ void Interface::occupationMenu(){
             break;}
         case 3:{
             int ano;
-            cout << "\"Listagens de Unidades Curriculares\" selecionada!\n";
             cout << "Ano (ex. 1): ";
             cin >> ano;
             cin.clear();
