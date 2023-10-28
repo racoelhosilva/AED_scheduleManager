@@ -43,6 +43,9 @@ public:
     // Requests
     void requestMenu();
 
+    // Total Listing
+    void totalListingMenu();
+
     // Saving and Exit
     void closeMenu();
 };

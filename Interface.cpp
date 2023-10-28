@@ -45,16 +45,15 @@ bool Interface::startMenu() {
     string classesFile = "../classes.csv";
     string studentsFile = fileOption == "1" ? "../updated_students_classes.csv" : "../students_classes.csv";
 
-    Gestor gestor;
-    if (!gestor.extractTurmas(classesPerUCFile)){
+    if (!this->gestor.extractTurmas(classesPerUCFile)){
         return false;
     }
     cout << "Turmas carregadas!\n";
-    if (!gestor.extractAulas(classesFile)){
+    if (!this->gestor.extractAulas(classesFile)){
         return false;
     }
     cout << "Aulas carregadas!\n";
-    if (!gestor.extractEstudantes(studentsFile)) {
+    if (!this->gestor.extractEstudantes(studentsFile)) {
         return false;
     }
     cout << "Estudantes carregados!\n";
@@ -67,13 +66,13 @@ void Interface::mainMenu() {
     this->header();
 
     cout << "O que deseja ver/fazer?\n";
-    cout << "\t1. Horários\t\t2. Listagens\t\t3. Ocupações\t\t4. Alterações\t\t5. Sair\n";
+    cout << "\t1. Horários\t\t2. Listagens\t\t3. Ocupações\t\t4. Alterações\t\t5. Listas Totais\t\t6. Sair\n";
     cout << "Opção: ";
     string actionOption;
     cin >> actionOption;
     cin.clear();
     cin.ignore(INT_MAX, '\n');
-    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5"){
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5" && actionOption != "6"){
         cout << "Input inválido. Opção: ";
         cin >> actionOption;
         cin.clear();
@@ -96,6 +95,10 @@ void Interface::mainMenu() {
         case 4:
             cout << "\"Alterações\" selecionado!\n\n";
             this->requestMenu();
+            break;
+        case 5:
+            cout << "\"Listas Totais\" selecionado!\n\n";
+            this->totalListingMenu();
             break;
         default:
             cout << "\"Sair\" selecionado!\n\n";
@@ -613,6 +616,43 @@ void Interface::requestMenu(){
                 this->requestMenu();
             }
             alteraçõesFeitas--;
+            this->inputWait();
+            break;}
+        default:{
+            cout << "\"Voltar\" selecionado!\n";
+            break;}
+    }
+
+    this->footer();
+    this->mainMenu();
+}
+
+void Interface::totalListingMenu() {
+    cout << "Que listagem pretende ver?\n";
+    cout << "\t1. Estudantes\t\t2. Aulas\t\t3. Turmas\t\t4. Voltar\n";
+    cout << "Opção: ";
+    string actionOption;
+    cin >> actionOption;
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4"){
+        cout << "Input inválido. Opção: ";
+        cin >> actionOption;
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+
+    switch (stoi(actionOption)) {
+        case 1:{
+            gestor.outputAllEstudantes();
+            this->inputWait();
+            break;}
+        case 2:{
+            gestor.outputAllAulas();
+            this->inputWait();
+            break;}
+        case 3:{
+            gestor.outputAllTurmas();
             this->inputWait();
             break;}
         default:{
