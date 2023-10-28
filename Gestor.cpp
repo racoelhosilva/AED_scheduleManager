@@ -327,7 +327,13 @@ bool Gestor::outputListaTurmas(string codigoUC){
     }
     return true;
 }
-void Gestor::outputListaUC(int ano){return;}
+void Gestor::outputListaUC(int ano){
+
+    for (Turma t : turmas) {
+        if (t.getcodigoTurma()[0] == (char)(ano + '0') && t.getcodigoTurma()[5] == '0' && t.getcodigoTurma()[6] == '1')
+            cout << t.getcodigoUC() << "\n";
+    }
+}
 
 void Gestor::outputListaEstudanteNUC(int n, int order){
     if (order == 1) {
