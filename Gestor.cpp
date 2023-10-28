@@ -328,8 +328,92 @@ bool Gestor::outputListaTurmas(string codigoUC){
 }
 void Gestor::outputListaUC(int ano){return;}
 
-void Gestor::outputListaEstudanteNUC(int n, int order){return;}
-void Gestor::outputListaEstudanteMaisNUC(int n, int order){return;}
+void Gestor::outputListaEstudanteNUC(int n, int order){
+    if (order == 1) {
+        set<Estudante, EstudanteAlphaAscending> lista;
+        for(Estudante e : estudantes) {
+            if (e.getSchedule().size() == n)
+                lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 2) {
+        set<Estudante, EstudanteAlphaDescending> lista;
+        for(Estudante e : estudantes) {
+            if (e.getSchedule().size() == n)
+                lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 3) {
+        set<Estudante, EstudanteNumAscending> lista;
+        for (Estudante e: estudantes) {
+            if (e.getSchedule().size() == n)
+                lista.insert(e);
+        }
+            for (Estudante e: lista) {
+                cout << e.getID() << " " << e.getName() << "\n";
+            }
+        }
+        if (order == 4) {
+            set<Estudante, EstudanteNumDescending> lista;
+            for (Estudante e: estudantes) {
+                if (e.getSchedule().size() == n)
+                    lista.insert(e);
+            }
+                for (Estudante e: lista) {
+                    cout << e.getID() << " " << e.getName() << "\n";
+                }
+        }
+}
+
+
+void Gestor::outputListaEstudanteMaisNUC(int n, int order){
+    if (order == 1) {
+        set<Estudante, EstudanteAlphaAscending> lista;
+        for(Estudante e : estudantes) {
+            if (e.getSchedule().size() > n)
+                lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 2) {
+        set<Estudante, EstudanteAlphaDescending> lista;
+        for(Estudante e : estudantes) {
+            if (e.getSchedule().size() > n)
+                lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 3) {
+        set<Estudante, EstudanteNumAscending> lista;
+        for (Estudante e: estudantes) {
+            if (e.getSchedule().size() > n)
+                lista.insert(e);
+        }
+        for (Estudante e: lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 4) {
+        set<Estudante, EstudanteNumDescending> lista;
+        for (Estudante e: estudantes) {
+            if (e.getSchedule().size() > n)
+                lista.insert(e);
+        }
+        for (Estudante e: lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+}
 
 bool Gestor::outputOcupaçãoTurma(string codigoTurma){return true;}
 bool Gestor::outputOcupaçãoUC(string codigoUC){return true;}
