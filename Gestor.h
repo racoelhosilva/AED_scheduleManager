@@ -19,7 +19,8 @@ public:
     void extractAulas(string fname);
     void extractEstudantes(string fname);
 
-
+    bool listEstudantesPerUC(string ucCode);
+    bool listEstudantesPerTurma(string classCode);
 
     void saveChanges(string fname);
 

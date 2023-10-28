@@ -15,8 +15,12 @@ public:
     void startMenu();
     // Operations
     void mainMenu();
+    void listingsMenu();
+    void listEstudantesPerUC();
+    void listEstudantesPerTurma();
     // Saving and Exit
     void closeMenu();
+
 };
 
 

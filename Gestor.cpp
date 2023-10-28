@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Gestor.h"
 
 void Gestor::extractTurmas(string fname) {
@@ -81,7 +82,33 @@ void Gestor::extractEstudantes(string fname) {
     estudantes.push_back(currentEstudante);
 }
 
+bool Gestor::listEstudantesPerUC(string ucCode) {
+    if(find_if(turmas.begin(), turmas.end(), [ucCode](const Turma& t) {return t.getcodigoUC() == ucCode;}) == turmas.end())
+        return false;
+    for (Estudante e : estudantes) {
+        for (Turma t : e.getSchedule()) {
+            if (t.getcodigoUC() == ucCode) {
+                cout << e.getID() << "  " << e.getName() << "\n";
+                break;
+            }
+        }
+    }
+    return true;
+}
 
+bool Gestor::listEstudantesPerTurma(string classCode) {
+    if(find_if(turmas.begin(), turmas.end(), [classCode](const Turma& t) {return t.getcodigoTurma() == classCode;}) == turmas.end())
+        return false;
+    for (Estudante e : estudantes) {
+        for (Turma t : e.getSchedule()) {
+            if (t.getcodigoTurma() == classCode) {
+                cout << e.getID() << "  " << e.getName() << " " << t.getcodigoUC() << "\n";
+                break;
+            }
+        }
+    }
+    return true;
+}
 
 
 // Testing Functions for the extract
@@ -117,3 +144,4 @@ void Gestor::outputAllEstudantes() {
 void Gestor::saveChanges(string fname) {
     cout << "Saving file!\n";
 }
+
