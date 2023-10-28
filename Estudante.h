@@ -15,9 +15,9 @@ class Estudante {
     public:
         Estudante(int id, string name, list<Turma> classes = {});
 
-        int const getID();
-        string const getName();
-        list<Turma> const getSchedule();
+        int const getID() const;
+        string const getName() const;
+        list<Turma> const getSchedule() const;
 
         void setSchedule(list<Turma> newSchedule);
         // method add to schedule

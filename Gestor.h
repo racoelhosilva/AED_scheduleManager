@@ -44,6 +44,7 @@ public:
      * 4 = Numérica Inversa
      */
 
+
     bool outputOcupaçãoTurma(string codigoTurma);
     bool outputOcupaçãoUC(string codigoUC);
     void outputOcupaçãoAno(int ano);
