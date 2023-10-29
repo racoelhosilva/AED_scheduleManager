@@ -16,7 +16,6 @@ public:
     string getcodigoTurma() const;
     list<Aula> getAulas() const;
     void addAulas(const Aula& aula);
-
 };
 
 

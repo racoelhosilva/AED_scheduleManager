@@ -97,13 +97,6 @@ public:
     bool pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova);
     bool desfazerÚltimoPedido();
 
-    // Funções de verificação
-    bool assessTurmaCap(Turma &t);
-    bool assessUCLimit(Estudante &e);
-    bool assessScheduleConflict(Turma &t, Estudante &e);
-    bool assessUCTurmaSingularity(Turma &t, Estudante &e);
-    bool assessTurmaCap(string codigoUC);
-
     void saveChanges(string fname);
 
     void sortTurmas();
