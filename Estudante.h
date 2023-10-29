@@ -23,6 +23,7 @@ class Estudante {
         void addToSchedule(Turma t);
 
         bool operator<(const Estudante& r) const;
+        bool operator==(const Estudante& r) const;
 };
 
 

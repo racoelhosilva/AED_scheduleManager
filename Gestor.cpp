@@ -106,10 +106,31 @@ bool Gestor::extractEstudantes(string fname) {
 }
 
 bool Gestor::outputHorárioEstudante(int id){
+    Estudante target(id, "", {});
+    auto it = find(estudantes.begin(), estudantes.end(), target);
+    for (Turma turma : it->getSchedule()) {
+        cout << turma.getcodigoUC() << '(' << turma.getcodigoTurma() << ')' << '\n';
+        for (auto aula : turma.getAulas()){
+            cout << "\t" << aula.getDia() << '\t' << aula.getHoraInicio() << '\t' << aula.getTipo() << '\n';
+        }
+    }
     return true;
 }
 
 bool Gestor::outputHorárioTurma(string codigoTurma){
+    if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
+        return false;
+
+    this->sortTurmas();
+
+    string ucPrefix = "L.EIC0";
+    ucPrefix.append(to_string((codigoTurma[0] - '1' + '0')));
+    for (int idx = 0; idx < 5; idx++) {
+        Turma target(ucPrefix.append(to_string(idx + '1')), codigoTurma);
+
+
+    }
+
     return true;
 }
 
@@ -465,6 +486,16 @@ bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){return
 bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){return true;}
 bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {return true;}
 bool Gestor::desfazerÚltimoPedido(){return true;}
+
+void Gestor::sortTurmas() {
+    sort(turmas.begin(), turmas.end(), compareTurmas);
+}
+
+bool compareTurmas(const Turma &t1, const Turma &t2){
+    bool compareUC = t1.getcodigoUC() < t2.getcodigoUC();
+    bool compareTurma = t1.getcodigoUC() == t2.getcodigoUC() && t1.getcodigoTurma() < t2.getcodigoTurma();
+    return  compareUC || compareTurma;
+}
 
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {

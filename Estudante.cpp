@@ -17,5 +17,9 @@ void Estudante::addToSchedule(Turma t) {
 };
 
 bool Estudante::operator<(const Estudante& r) const{
-    return studentName < r.studentName;
+    return studentID < r.studentID;
+}
+
+bool Estudante::operator==(const Estudante& r) const{
+    return studentID == r.studentID;
 }

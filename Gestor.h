@@ -87,6 +87,9 @@ public:
 
     void saveChanges(string fname);
 
+    void sortTurmas();
+
+
     // Testing Functions for the extracts and output
     void outputAllTurmas();
     void outputAllAulas();
@@ -94,6 +97,7 @@ public:
 
 };
 
+bool compareTurmas(const Turma &t1, const Turma &t2);
 
 
 #endif //AED2324_PRJ1_G15_GESTOR_H
