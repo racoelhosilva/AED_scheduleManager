@@ -49,7 +49,7 @@ struct compareHorario{
 class Gestor {
 private:
     vector<Turma> turmas;
-    set<Estudante, EstudanteNumAscending> estudantes;
+    vector<Estudante> estudantes;
     queue<Pedido> pedidos;
     stack<Pedido> pedidosRealizados;
     list<Pedido> pedidosInválidos;

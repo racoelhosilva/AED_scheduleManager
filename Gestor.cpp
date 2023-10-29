@@ -91,7 +91,7 @@ bool Gestor::extractEstudantes(string fname) {
         getline(fieldReader, classID, '\r');
         if (id != previousId) {
             currentEstudante.setSchedule(turmasEstudante);
-            estudantes.insert(currentEstudante);
+            estudantes.push_back(currentEstudante);
             currentEstudante = Estudante(id, name);
             turmasEstudante = {};
             previousId = id;
@@ -103,7 +103,7 @@ bool Gestor::extractEstudantes(string fname) {
         }
     }
     currentEstudante.setSchedule(turmasEstudante);
-    estudantes.insert(currentEstudante);
+    estudantes.push_back(currentEstudante);
 
     return true;
 }
