@@ -25,6 +25,7 @@ bool Gestor::extractTurmas(string fname) {
         getline(fieldReader, classID, '\r');
         turmas.emplace_back(ucID, classID);
     }
+    //sortTurmas(); // Kind of optional...
     return true;
 }
 
@@ -104,22 +105,22 @@ bool Gestor::extractEstudantes(string fname) {
     }
     currentEstudante.setSchedule(turmasEstudante);
     estudantes.push_back(currentEstudante);
-
+    sortEstudantesByNumber();
     return true;
 }
 
 bool Gestor::outputHorárioEstudante(int id){
     Estudante target(id, "", {});
-    auto it = find(estudantes.begin(), estudantes.end(), target);
-    if (it == estudantes.end()){
+    int idx = binarySearchEstudantes(id);
+    if (idx == -1){
         return false;
     }
     set<pair<Aula,string>, compareHorario> horario;
-    for (Turma turma : it->getSchedule()) {
+    for (Turma turma : estudantes[idx].getSchedule()) {
         for (auto aula : turma.getAulas()){
             horario.insert({aula, turma.getcodigoUC()});
         }
-    }cout << "Horário do estudante: " << it->getName() << " (" << id << ")\n";
+    }cout << "Horário do estudante: " << estudantes[idx].getName() << " (" << id << ")\n";
     printHorarios(horario);
     return true;
 }
@@ -505,16 +506,6 @@ bool Gestor::makePedido(int id, string codigoUC1, string codigoTurma1, string co
 }
 bool Gestor::desfazerÚltimoPedido(){return true;}
 
-void Gestor::sortTurmas() {
-    sort(turmas.begin(), turmas.end(), compareTurmas);
-}
-
-bool compareTurmas(const Turma &t1, const Turma &t2){
-    bool compareUC = t1.getcodigoUC() < t2.getcodigoUC();
-    bool compareTurma = t1.getcodigoUC() == t2.getcodigoUC() && t1.getcodigoTurma() < t2.getcodigoTurma();
-    return  compareUC || compareTurma;
-}
-
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {
     for (Turma t : turmas){
@@ -592,4 +583,39 @@ void Gestor::outputAllEstudantes(int order) {
 
 void Gestor::saveChanges(string fname) {
     cout << "Alterações guardadas!\n";
+}
+
+void Gestor::sortTurmas() {
+    sort(turmas.begin(), turmas.end(), compareTurmas);
+}
+
+bool compareTurmas(const Turma &t1, const Turma &t2){
+    bool compareUC = t1.getcodigoUC() < t2.getcodigoUC();
+    bool compareTurma = t1.getcodigoUC() == t2.getcodigoUC() && t1.getcodigoTurma() < t2.getcodigoTurma();
+    return  compareUC || compareTurma;
+}
+
+void Gestor::sortEstudantesByNumber() {
+    sort(estudantes.begin(), estudantes.end(), compareEstudantes);
+}
+
+bool compareEstudantes(const Estudante &e1, const Estudante &e2){
+    return e1.getID() < e2.getID();
+}
+
+int Gestor::binarySearchEstudantes(int id) {
+    int lowerBound = 0; int upperBound = estudantes.size()-1;
+    while (lowerBound <= upperBound){
+        int middleValue = (lowerBound + upperBound)/2;
+        if (estudantes[middleValue].getID() < id){
+            lowerBound = middleValue + 1;
+        }
+        else if (estudantes[middleValue].getID() > id){
+            upperBound = middleValue - 1;
+        }
+        else {
+            return middleValue;
+        }
+    }
+    return -1;
 }

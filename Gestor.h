@@ -98,7 +98,8 @@ public:
     void saveChanges(string fname);
 
     void sortTurmas();
-
+    void sortEstudantesByNumber();
+    int binarySearchEstudantes(int id);
 
     // Testing Functions for the extracts and output
     void outputAllTurmas();
@@ -108,6 +109,7 @@ public:
 };
 
 bool compareTurmas(const Turma &t1, const Turma &t2);
+bool compareEstudantes(const Estudante &e1, const Estudante &e2);
 
 
 #endif //AED2324_PRJ1_G15_GESTOR_H
