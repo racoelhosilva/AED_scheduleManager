@@ -210,31 +210,23 @@ bool Gestor::outputListaEstudanteTurma(string codigoTurma, int order){
         }
     }
     if (order == 3) {
-        set<Estudante, EstudanteNumAscending> lista;
         for (Estudante e: estudantes) {
             for (Turma t: e.getSchedule()) {
                 if (t.getcodigoTurma() == codigoTurma) {
-                    lista.insert(e);
+                    cout << e.getID() << " " << e.getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     if (order == 4) {
-        set<Estudante, EstudanteNumDescending> lista;
-        for (Estudante e: estudantes) {
-            for (Turma t: e.getSchedule()) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            for (Turma t : e->getSchedule()) {
                 if (t.getcodigoTurma() == codigoTurma) {
-                    lista.insert(e);
+                    cout << e->getID() << " " << e->getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     return true;
@@ -272,31 +264,23 @@ bool Gestor::outputListaEstudanteUC(string codigoUC, int order){
         }
     }
     if (order == 3) {
-        set<Estudante, EstudanteNumAscending> lista;
         for (Estudante e: estudantes) {
             for (Turma t: e.getSchedule()) {
                 if (t.getcodigoUC() == codigoUC) {
-                    lista.insert(e);
+                    cout << e.getID() << " " << e.getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     if (order == 4) {
-        set<Estudante, EstudanteNumDescending> lista;
-        for (Estudante e: estudantes) {
-            for (Turma t: e.getSchedule()) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            for (Turma t : e->getSchedule()) {
                 if (t.getcodigoUC() == codigoUC) {
-                    lista.insert(e);
+                    cout << e->getID() << " " << e->getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     return true;
@@ -331,31 +315,23 @@ void Gestor::outputListaEstudanteAno(int ano, int order){
         }
     }
     if (order == 3) {
-        set<Estudante, EstudanteNumAscending> lista;
         for (Estudante e: estudantes) {
             for (Turma t: e.getSchedule()) {
                 if (t.getcodigoTurma()[0] == (char)(ano + '0')) {
-                    lista.insert(e);
+                    cout << e.getID() << " " << e.getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     if (order == 4) {
-        set<Estudante, EstudanteNumDescending> lista;
-        for (Estudante e: estudantes) {
-            for (Turma t: e.getSchedule()) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            for (Turma t : e->getSchedule()) {
                 if (t.getcodigoTurma()[0] == (char)(ano + '0')) {
-                    lista.insert(e);
+                    cout << e->getID() << " " << e->getName() << "\n";
                     break;
                 }
             }
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
         }
     }
 }
@@ -376,49 +352,43 @@ void Gestor::outputListaUC(int ano){
     }
 }
 
-void Gestor::outputListaEstudanteNUC(int n, int order){
+void Gestor::outputListaEstudanteNUC(int n, int order) {
     if (order == 1) {
         set<Estudante, EstudanteAlphaAscending> lista;
-        for(Estudante e : estudantes) {
+        for (Estudante e: estudantes) {
             if (e.getSchedule().size() == n)
                 lista.insert(e);
         }
-        for (Estudante e : lista) {
+        for (Estudante e: lista) {
             cout << e.getID() << " " << e.getName() << "\n";
         }
     }
     if (order == 2) {
         set<Estudante, EstudanteAlphaDescending> lista;
-        for(Estudante e : estudantes) {
-            if (e.getSchedule().size() == n)
-                lista.insert(e);
-        }
-        for (Estudante e : lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
-        }
-    }
-    if (order == 3) {
-        set<Estudante, EstudanteNumAscending> lista;
         for (Estudante e: estudantes) {
             if (e.getSchedule().size() == n)
                 lista.insert(e);
         }
-            for (Estudante e: lista) {
+        for (Estudante e: lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 3) {
+        for (Estudante e: estudantes) {
+            if (e.getSchedule().size() == n) {
                 cout << e.getID() << " " << e.getName() << "\n";
             }
         }
-        if (order == 4) {
-            set<Estudante, EstudanteNumDescending> lista;
-            for (Estudante e: estudantes) {
-                if (e.getSchedule().size() == n)
-                    lista.insert(e);
-            }
-                for (Estudante e: lista) {
-                    cout << e.getID() << " " << e.getName() << "\n";
-                }
-        }
-}
+    }
 
+    if (order == 4) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            if (e->getSchedule().size() == n) {
+                cout << e->getID() << " " << e->getName() << "\n";
+            }
+        }
+    }
+}
 
 void Gestor::outputListaEstudanteMaisNUC(int n, int order){
     if (order == 1) {
@@ -442,26 +412,21 @@ void Gestor::outputListaEstudanteMaisNUC(int n, int order){
         }
     }
     if (order == 3) {
-        set<Estudante, EstudanteNumAscending> lista;
         for (Estudante e: estudantes) {
-            if (e.getSchedule().size() > n)
-                lista.insert(e);
-        }
-        for (Estudante e: lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
+            if (e.getSchedule().size() > n) {
+                cout << e.getID() << " " << e.getName() << "\n";
+            }
         }
     }
     if (order == 4) {
-        set<Estudante, EstudanteNumDescending> lista;
-        for (Estudante e: estudantes) {
-            if (e.getSchedule().size() > n)
-                lista.insert(e);
-        }
-        for (Estudante e: lista) {
-            cout << e.getID() << " " << e.getName() << "\n";
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            if (e->getSchedule().size() > n) {
+                cout << e->getID() << " " << e->getName() << "\n";
+            }
         }
     }
 }
+
 
 bool Gestor::outputOcupaçãoTurma(string codigoTurma){
     if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
@@ -554,17 +519,62 @@ void Gestor::outputAllAulas() {
 }
 
 void Gestor::outputAllEstudantes(int order) {
-
-    for (Estudante e : estudantes) {
-        cout << e.getName() << ", " << e.getID() << endl;
-        for (Turma t : e.getSchedule()) {
-            cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
-            for (Aula a : t.getAulas()) {
-                cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", " << a.getDuracao() << ", " << a.getTipo() << endl;
+    if (order == 1) {
+        set<Estudante, EstudanteAlphaAscending> lista;
+        for(Estudante e : estudantes) {
+            lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getName() << ", " << e.getID() << endl;
+            for (Turma t: e.getSchedule()) {
+                cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
+                for (Aula a: t.getAulas()) {
+                    cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", "
+                         << a.getDuracao() << ", " << a.getTipo() << endl;
+                }
             }
         }
     }
-
+    if (order == 2) {
+        set<Estudante, EstudanteAlphaDescending> lista;
+        for(Estudante e : estudantes) {
+            lista.insert(e);
+        }
+        for (Estudante e : lista) {
+            cout << e.getName() << ", " << e.getID() << endl;
+            for (Turma t : e.getSchedule()) {
+                cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
+                for (Aula a: t.getAulas()) {
+                    cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", "
+                         << a.getDuracao() << ", " << a.getTipo() << endl;
+                }
+            }
+        }
+    }
+    if (order == 3) {
+        for (Estudante e : estudantes) {
+            cout << e.getName() << ", " << e.getID() << endl;
+            for (Turma t: e.getSchedule()) {
+                cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
+                for (Aula a: t.getAulas()) {
+                    cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", "
+                         << a.getDuracao() << ", " << a.getTipo() << endl;
+                }
+            }
+        }
+    }
+    if (order == 4) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            cout << e->getName() << ", " << e->getID() << endl;
+            for (Turma t : e->getSchedule()) {
+                cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
+                for (Aula a: t.getAulas()) {
+                    cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", "
+                         << a.getDuracao() << ", " << a.getTipo() << endl;
+                }
+            }
+        }
+    }
 }
 
 void Gestor::saveChanges(string fname) {
