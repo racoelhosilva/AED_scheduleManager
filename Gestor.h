@@ -5,16 +5,43 @@
 #include "Estudante.h"
 #include "Pedido.h"
 #include <vector>
+#include <set>
 #include <stack>
 #include <queue>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
+// Comparison operators
+struct EstudanteAlphaAscending {
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getName() < b.getName();
+    }
+};
+
+struct EstudanteAlphaDescending {
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getName() > b.getName();
+    }
+};
+
+struct EstudanteNumAscending {
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getID() < b.getID();
+    }
+};
+
+struct EstudanteNumDescending {
+    bool operator()(const Estudante& a, const Estudante& b) const {
+        return a.getID() > b.getID();
+    }
+};
+
+
 class Gestor {
 private:
     vector<Turma> turmas;
-    vector<Estudante> estudantes;
+    set<Estudante, EstudanteNumAscending> estudantes;
     queue<Pedido> pedidos;
     stack<Pedido> pedidosRealizados;
     list<Pedido> pedidosInválidos;
@@ -63,6 +90,7 @@ public:
     void outputAllEstudantes();
 
 };
+
 
 
 #endif //AED2324_PRJ1_G15_GESTOR_H

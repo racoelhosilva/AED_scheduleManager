@@ -3,30 +3,7 @@
 #include <set>
 #include <map>
 
-// Comparison operators
-struct EstudanteAlphaAscending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getName() < b.getName();
-    }
-};
 
-struct EstudanteAlphaDescending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getName() > b.getName();
-    }
-};
-
-struct EstudanteNumAscending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getID() < b.getID();
-    }
-};
-
-struct EstudanteNumDescending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getID() > b.getID();
-    }
-};
 
 bool Gestor::extractTurmas(string fname) {
     ifstream fileReader(fname);
@@ -108,7 +85,7 @@ bool Gestor::extractEstudantes(string fname) {
         getline(fieldReader, classID, '\r');
         if (id != previousId) {
             currentEstudante.setSchedule(turmasEstudante);
-            estudantes.push_back(currentEstudante);
+            estudantes.insert(currentEstudante);
             currentEstudante = Estudante(id, name);
             turmasEstudante = {};
             previousId = id;
@@ -120,7 +97,7 @@ bool Gestor::extractEstudantes(string fname) {
         }
     }
     currentEstudante.setSchedule(turmasEstudante);
-    estudantes.push_back(currentEstudante);
+    estudantes.insert(currentEstudante);
 
     return true;
 }
