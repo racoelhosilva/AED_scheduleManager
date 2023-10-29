@@ -487,9 +487,22 @@ void Gestor::outputOcupaçãoAno(int ano) {
 
 }
 
-bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){return true;}
-bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){return true;}
-bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {return true;}
+
+bool Gestor::makePedido(int id, string codigoUC1, string codigoTurma1, string codigoUC2, string codigoTurma2) {
+    /*Estudante e = Estudante(id, "");
+    set<Estudante>::iterator it = find(estudantes.begin(), estudantes.end(), e);
+    e = *it;
+    Turma t1, t2;
+    for(Turma t : turmas) {
+        if (t.getcodigoTurma() == codigoTurma1 && t.getcodigoUC() == codigoUC1) {
+            t1 = t;
+        } else if (t.getcodigoTurma() == codigoTurma2 && t.getcodigoUC() == codigoUC2) {
+            t2 = t;
+        }
+    }
+    Pedido p = Pedido(e, t1, t2, "");*/
+    return true;
+}
 bool Gestor::desfazerÚltimoPedido(){return true;}
 
 void Gestor::sortTurmas() {

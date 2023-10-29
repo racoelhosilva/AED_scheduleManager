@@ -1,5 +1,12 @@
 #include "Turma.h"
 
+Turma::Turma() {
+    codigoUC = "noIdUC",
+    codigoTurma = "noIdTurma";
+    aulas = {};
+}
+
+
 Turma::Turma(string codigoUC, string codigoTurma) {
     this->codigoUC = codigoUC;
     this->codigoTurma = codigoTurma;
