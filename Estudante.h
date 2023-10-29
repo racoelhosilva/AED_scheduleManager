@@ -13,6 +13,7 @@ class Estudante {
         string studentName;
         list<Turma> schedule;
     public:
+        Estudante();
         Estudante(int id, string name, list<Turma> classes = {});
 
         int const getID() const;
