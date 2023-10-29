@@ -2,6 +2,8 @@
 #include "Gestor.h"
 #include <set>
 #include <map>
+#include <iomanip>
+#include <cmath>
 
 void Gestor::setCap(const int newCap){
     this->cap = newCap;
@@ -44,9 +46,10 @@ bool Gestor::extractAulas(string fname) {
         char x;
         fieldReader >> start >> x >> duration >> x;
         getline(fieldReader, type, '\r');
+        int numWD = weekdayToNum[weekday];
         for (Turma &T : turmas) {
             if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
-                T.addAulas(Aula(weekday, start, duration, type));
+                T.addAulas(Aula(numWD, start, duration, type));
             }
         }
     }
@@ -108,12 +111,17 @@ bool Gestor::extractEstudantes(string fname) {
 bool Gestor::outputHorárioEstudante(int id){
     Estudante target(id, "", {});
     auto it = find(estudantes.begin(), estudantes.end(), target);
+    if (it == estudantes.end()){
+        return false;
+    }
+    set<pair<Aula,string>, compareHorario> horario;
     for (Turma turma : it->getSchedule()) {
-        cout << turma.getcodigoUC() << '(' << turma.getcodigoTurma() << ')' << '\n';
         for (auto aula : turma.getAulas()){
-            cout << "\t" << aula.getDia() << '\t' << aula.getHoraInicio() << '\t' << aula.getTipo() << '\n';
+            horario.insert({aula, turma.getcodigoUC()});
         }
     }
+    cout << "Horário do estudante: " << id << '\n';
+    printHorarios(horario);
     return true;
 }
 
@@ -137,6 +145,26 @@ bool Gestor::outputHorárioTurma(string codigoTurma){
 bool Gestor::outputHorárioUC(string codigoUC){
     return true;
 }
+
+void Gestor::printHorarios(set<pair<Aula,string>, compareHorario> horario){
+    int currentWeekday = -1;
+    for (auto x : horario){
+        if (x.first.getDia() > currentWeekday){
+            currentWeekday = x.first.getDia();
+            cout << numToWeekday[currentWeekday] << '\n';
+        }
+        int h1, m1, h2, m2;
+        h1 = int(x.first.getHoraInicio());
+        m1 = (x.first.getHoraInicio() - h1) == 0.0 ? 0 : 30;
+        h2 = int(x.first.getHoraInicio() + x.first.getDuracao());
+        m2 = (x.first.getHoraInicio() + x.first.getDuracao() - h2) == 0.0 ? 0 : 30;
+        cout << '\t' <<
+            setw(2) << setfill('0') << h1 << ':' << setw(2) << setfill('0') << m1 << " - " <<
+            setw(2) << setfill('0') << h2 << ':' << setw(2) << setfill('0') << m2 << '\t' <<
+            x.second << "  (" << x.first.getTipo() << ")\n";
+    }
+}
+
 
 bool Gestor::outputListaEstudanteTurma(string codigoTurma, int order){
     if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
@@ -508,7 +536,7 @@ void Gestor::outputAllAulas() {
     for (Turma t : turmas){
         cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << '\t';
             for (Aula a : t.getAulas())
-                cout << '\t' << a.getDia() << ' ' << a.getDuracao() << "     \t|\t";
+                cout << '\t' << numToWeekday[a.getDia()] << ' ' << a.getDuracao() << "     \t|\t";
         cout << '\n';
     }
 }
@@ -520,7 +548,7 @@ void Gestor::outputAllEstudantes(int order) {
         for (Turma t : e.getSchedule()) {
             cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
             for (Aula a : t.getAulas()) {
-                cout << "        " << a.getDia() << ", " << a.getHoraInicio() << ", " << a.getDuracao() << ", " << a.getTipo() << endl;
+                cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", " << a.getDuracao() << ", " << a.getTipo() << endl;
             }
         }
     }

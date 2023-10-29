@@ -6,14 +6,14 @@ using namespace std;
 
 class Aula {
 private:
-    string dia;
+    int dia;
     float horaInicio;
     float duracao;
     string tipo;
 
 public:
-    Aula(string dia, float horaInicio, float duracao, string tipo);
-    string getDia() const;
+    Aula(int dia, float horaInicio, float duracao, string tipo);
+    int getDia() const;
     float getHoraInicio() const;
     float getDuracao() const;
     string getTipo() const;

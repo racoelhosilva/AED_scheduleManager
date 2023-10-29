@@ -1,13 +1,13 @@
 #include "Aula.h"
 
-Aula::Aula(string dia, float horaInicio, float duracao, string tipo) {
+Aula::Aula(int dia, float horaInicio, float duracao, string tipo) {
     this->dia = dia;
     this->horaInicio = horaInicio;
     this->duracao = duracao;
     this->tipo = tipo;
 }
 
-string Aula::getDia() const {
+int Aula::getDia() const {
     return this->dia;
 }
 

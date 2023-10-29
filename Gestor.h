@@ -8,6 +8,7 @@
 #include <set>
 #include <stack>
 #include <queue>
+#include <map>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -37,6 +38,13 @@ struct EstudanteNumDescending {
     }
 };
 
+struct compareHorario{
+    bool operator()(const pair<Aula,string> &a1, const pair<Aula,string> &a2) const {
+        bool compareDia = a1.first.getDia() < a2.first.getDia();
+        bool compareHora = a1.first.getDia() == a2.first.getDia() &&  a1.first.getHoraInicio() < a2.first.getHoraInicio();
+        return compareDia || compareHora;
+    }
+};
 
 class Gestor {
 private:
@@ -46,6 +54,9 @@ private:
     stack<Pedido> pedidosRealizados;
     list<Pedido> pedidosInválidos;
     int cap = 30;
+
+    map<int,string> numToWeekday = {{0, "Monday"},{1, "Tuesday"},{2, "Wednesday"},{3, "Thursday"},{4, "Friday"}};
+    map<string,int> weekdayToNum = {{"Monday", 0},{"Tuesday", 1},{"Wednesday", 2},{"Thursday", 3},{"Friday", 4}};
 
 public:
 
@@ -58,6 +69,7 @@ public:
     bool outputHorárioEstudante(int id);
     bool outputHorárioTurma(string codigoTurma);
     bool outputHorárioUC(string codigoUC);
+    void printHorarios(set<pair<Aula,string>, compareHorario> horario);
 
     bool outputListaEstudanteTurma(string codigoTurma, int order);
     bool outputListaEstudanteUC(string codigoUC, int order);
