@@ -1,0 +1,129 @@
+\doxysection{Gestor.\+h}
+\hypertarget{Gestor_8h_source}{}\label{Gestor_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ AED2324\_PRJ1\_G15\_GESTOR\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ AED2324\_PRJ1\_G15\_GESTOR\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Turma.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Estudante.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Pedido.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Comparison\ operators}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structEstudanteAlphaAscending}{EstudanteAlphaAscending}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.getName()\ <\ b.getName();}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structEstudanteAlphaDescending}{EstudanteAlphaDescending}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.getName()\ >\ b.getName();}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structEstudanteNumAscending}{EstudanteNumAscending}}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.getID()\ <\ b.getID();}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ \};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structEstudanteNumDescending}{EstudanteNumDescending}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\&\ b)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.getID()\ >\ b.getID();}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcompareHorario}{compareHorario}}\{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator()(\textcolor{keyword}{const}\ pair<Aula,string>\ \&a1,\ \textcolor{keyword}{const}\ pair<Aula,string>\ \&a2)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ compareDia\ =\ a1.first.getDia()\ <\ a2.first.getDia();}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ compareHora\ =\ a1.first.getDia()\ ==\ a2.first.getDia()\ \&\&\ \ a1.first.getHoraInicio()\ <\ a2.first.getHoraInicio();}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ compareDia\ ||\ compareHora;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classGestor}{Gestor}}\ \{}
+\DoxyCodeLine{00050\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00051\ \ \ \ \ vector<Turma>\ turmas;}
+\DoxyCodeLine{00052\ \ \ \ \ vector<Estudante>\ estudantes;}
+\DoxyCodeLine{00053\ \ \ \ \ queue<Pedido>\ pedidos;}
+\DoxyCodeLine{00054\ \ \ \ \ stack<Pedido>\ pedidosRealizados;}
+\DoxyCodeLine{00055\ \ \ \ \ list<Pedido>\ pedidosInválidos;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ cap\ =\ 30;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ map<int,string>\ numToWeekday\ =\ \{\{0,\ \textcolor{stringliteral}{"{}Monday"{}}\},\{1,\ \textcolor{stringliteral}{"{}Tuesday"{}}\},\{2,\ \textcolor{stringliteral}{"{}Wednesday"{}}\},\{3,\ \textcolor{stringliteral}{"{}Thursday"{}}\},\{4,\ \textcolor{stringliteral}{"{}Friday"{}}\}\};}
+\DoxyCodeLine{00059\ \ \ \ \ map<string,int>\ weekdayToNum\ =\ \{\{\textcolor{stringliteral}{"{}Monday"{}},\ 0\},\{\textcolor{stringliteral}{"{}Tuesday"{}},\ 1\},\{\textcolor{stringliteral}{"{}Wednesday"{}},\ 2\},\{\textcolor{stringliteral}{"{}Thursday"{}},\ 3\},\{\textcolor{stringliteral}{"{}Friday"{}},\ 4\}\};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ setCap(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ newCap);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{bool}\ extractTurmas(\textcolor{keywordtype}{string}\ fname);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{bool}\ extractAulas(\textcolor{keywordtype}{string}\ fname);}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ extractEstudantes(\textcolor{keywordtype}{string}\ fname);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputHorárioEstudante(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputHorárioTurma(\textcolor{keywordtype}{string}\ codigoTurma);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputHorárioUC(\textcolor{keywordtype}{string}\ codigoUC);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{void}\ printHorarios(set<pair<Aula,string>,\ \mbox{\hyperlink{structcompareHorario}{compareHorario}}>\ horario);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputListaEstudanteTurma(\textcolor{keywordtype}{string}\ codigoTurma,\ \textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputListaEstudanteUC(\textcolor{keywordtype}{string}\ codigoUC,\ \textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ outputListaEstudanteAno(\textcolor{keywordtype}{int}\ ano,\ \textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputListaTurmas(\textcolor{keywordtype}{string}\ codigoUC);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ outputListaUC(\textcolor{keywordtype}{int}\ ano);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ outputListaEstudanteNUC(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ outputListaEstudanteMaisNUC(\textcolor{keywordtype}{int}\ n,\ \textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{/*\ Orders:}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ \ *\ 1\ =\ Alfabética}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ *\ 2\ =\ Alfabética\ Inversa}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ *\ 3\ =\ Numérica}}
+\DoxyCodeLine{00086\ \textcolor{comment}{\ \ \ \ \ *\ 4\ =\ Numérica\ Inversa}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputOcupaçãoTurma(\textcolor{keywordtype}{string}\ codigoTurma);}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ outputOcupaçãoUC(\textcolor{keywordtype}{string}\ codigoUC);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ outputOcupaçãoAno(\textcolor{keywordtype}{int}\ ano);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{comment}{//\ Falta\ função\ para\ verificar\ se\ pode\ trocar}}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{bool}\ pedidoRemoção(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{string}\ codigoUC,\ \textcolor{keywordtype}{string}\ codigoTurma);}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ pedidoInserção(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{string}\ codigoUC,\ \textcolor{keywordtype}{string}\ codigoTurma);}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{bool}\ pedidoTroca(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{string}\ codigoUCAtual,\ \textcolor{keywordtype}{string}\ codigoTurmaAtual,\ \textcolor{keywordtype}{string}\ codigoUCNova,\ \textcolor{keywordtype}{string}\ codigoTurmaNova);}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ desfazerÚltimoPedido();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Funções\ de\ verificação}}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{bool}\ assessTurmaCap(\mbox{\hyperlink{classTurma}{Turma}}\ \&t);}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{bool}\ assessUCLimit(\mbox{\hyperlink{classEstudante}{Estudante}}\ \&e);}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{bool}\ assessScheduleConflict(\mbox{\hyperlink{classTurma}{Turma}}\ \&t,\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&e);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ assessUCTurmaSingularity(\mbox{\hyperlink{classTurma}{Turma}}\ \&t,\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&e);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ assessTurmaCap(\textcolor{keywordtype}{string}\ codigoUC);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ saveChanges(\textcolor{keywordtype}{string}\ fname);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ sortTurmas();}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ sortEstudantesByNumber();}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ binarySearchEstudantes(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ Testing\ Functions\ for\ the\ extracts\ and\ output}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{void}\ outputAllTurmas();}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{void}\ outputAllAulas();}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ outputAllEstudantes(\textcolor{keywordtype}{int}\ order);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keywordtype}{bool}\ compareTurmas(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTurma}{Turma}}\ \&t1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTurma}{Turma}}\ \&t2);}
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{bool}\ compareEstudantes(\textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&e1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classEstudante}{Estudante}}\ \&e2);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//AED2324\_PRJ1\_G15\_GESTOR\_H}}
+
+\end{DoxyCode}
