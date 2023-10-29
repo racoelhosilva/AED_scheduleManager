@@ -504,6 +504,10 @@ bool Gestor::makePedido(int id, string codigoUC1, string codigoTurma1, string co
     Pedido p = Pedido(e, t1, t2, "");*/
     return true;
 }
+
+bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){return true;}
+bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){return true;}
+bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {return true;}
 bool Gestor::desfazerÚltimoPedido(){return true;}
 
 // Testing Functions for the extract

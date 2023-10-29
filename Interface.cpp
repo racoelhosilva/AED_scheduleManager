@@ -558,7 +558,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.makePedido(id, codigoUC, codigoTurma)){
+            if (!gestor.pedidoRemoção(id, codigoUC, codigoTurma)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
@@ -599,7 +599,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.makePedido(id, codigoUC, codigoTurma)){
+            if (!gestor.pedidoInserção(id, codigoUC, codigoTurma)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
@@ -662,7 +662,7 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.makePedido(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova)){
+            if (!gestor.pedidoTroca(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova)){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
