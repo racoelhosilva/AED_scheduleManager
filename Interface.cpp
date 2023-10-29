@@ -57,6 +57,23 @@ bool Interface::startMenu() {
         return false;
     }
     cout << "Estudantes carregados!\n";
+    cout << "\n";
+    int newCap;
+    cout << "Qual o valor de \'cap\' que deseja? [default=30]: ";
+    cin >> newCap;
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    while (newCap < 1 || newCap > 50){
+        cout << "Input inválido. Tente novamente: ";
+        cin >> newCap;
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+    cout << "Nota:\teste valor só é usado para verificar se é possível realizar trocas,\n\t\tnão para carregar os dados iniciais da base de dados.\n";
+    this->gestor.setCap(newCap);
+    if (newCap != 30) {
+        cout << "Valor \'cap\' atualizado!\n";
+    }
 
     this->footer();
     return true;
@@ -691,7 +708,8 @@ void Interface::totalListingMenu() {
 
     switch (stoi(actionOption)) {
         case 1:{
-            gestor.outputAllEstudantes();
+            int order = this->orderMenu();
+            gestor.outputAllEstudantes(order);
             this->inputWait();
             break;}
         case 2:{

@@ -3,6 +3,9 @@
 #include <set>
 #include <map>
 
+void Gestor::setCap(const int newCap){
+    this->cap = newCap;
+}
 
 
 bool Gestor::extractTurmas(string fname) {
@@ -479,7 +482,7 @@ void Gestor::outputAllAulas() {
     }
 }
 
-void Gestor::outputAllEstudantes() {
+void Gestor::outputAllEstudantes(int order) {
 
     for (Estudante e : estudantes) {
         cout << e.getName() << ", " << e.getID() << endl;

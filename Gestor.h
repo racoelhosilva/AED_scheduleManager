@@ -45,8 +45,11 @@ private:
     queue<Pedido> pedidos;
     stack<Pedido> pedidosRealizados;
     list<Pedido> pedidosInválidos;
+    int cap = 30;
 
 public:
+
+    void setCap(const int newCap);
 
     bool extractTurmas(string fname);
     bool extractAulas(string fname);
@@ -87,7 +90,7 @@ public:
     // Testing Functions for the extracts and output
     void outputAllTurmas();
     void outputAllAulas();
-    void outputAllEstudantes();
+    void outputAllEstudantes(int order);
 
 };
 
