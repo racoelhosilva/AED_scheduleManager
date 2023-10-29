@@ -126,23 +126,36 @@ bool Gestor::outputHorárioEstudante(int id){
 }
 
 bool Gestor::outputHorárioTurma(string codigoTurma){
-    if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
-        return false;
-
-    this->sortTurmas();
-
-    string ucPrefix = "L.EIC0";
-    ucPrefix.append(to_string((codigoTurma[0] - '1' + '0')));
-    for (int idx = 0; idx < 5; idx++) {
-        Turma target(ucPrefix.append(to_string(idx + '1')), codigoTurma);
-
-
+    set<pair<Aula,string>, compareHorario> horario;
+    for (Turma turma : turmas) {
+        if (turma.getcodigoTurma() == codigoTurma) {
+            for (auto aula: turma.getAulas()) {
+                horario.insert({aula, turma.getcodigoUC()});
+            }
+        }
     }
-
+    if (horario.empty()){
+        return false;
+    }
+    cout << "Horário da Turma: " << codigoTurma << '\n';
+    printHorarios(horario);
     return true;
 }
 
 bool Gestor::outputHorárioUC(string codigoUC){
+    set<pair<Aula,string>, compareHorario> horario;
+    for (Turma turma : turmas) {
+        if (turma.getcodigoUC() == codigoUC) {
+            for (auto aula: turma.getAulas()) {
+                horario.insert({aula, turma.getcodigoUC()});
+            }
+        }
+    }
+    if (horario.empty()){
+        return false;
+    }
+    cout << "Horário da Unidade Curricular: " << codigoUC << '\n';
+    printHorarios(horario);
     return true;
 }
 
