@@ -1,0 +1,63 @@
+#+title: Project Analysis
+
+** Load dataset from the files
+
+*** Classes to implement
+
+**** Principais
+
++ Aula :: aula de uma determinada UC
++ Estudante :: aluno tem um nome e um Schedule
++ Turma :: código de turma e um Schedule
+
+**** Auxiliares
+
++ Horário :: horário, conjunto de várias aulas, implementadas com STL Set
+
+*** Input Functions
+
+**** classes_per_uc.csv
+
++ Gerar as turmas que vão existir e um horário em branco, e as UCs de cada turma
+
+**** classes.csv
+
++ Gerar as aulas e associa-las à turma (associa ao horário, se for possível)
+
+**** students.csv
+
++ Criar o aluno com horário em branco e ir associando as aulas (associa ao horário, se for possível)
+
+*** Resultado
+
+- Conjunto de turmas com aulas associadas e um horário
+- Conjunto de alunos com aulas associadas e um horário
+
+** Read input from Command Line
+
+Select the operation to process:
+
+*** Filter the Dataset
+
++ Output do horário de um aluno ou turma
++ Output do nº de alunos de uma turma, de uma cadeira ou de um ano
++ Output do nº de alunos inscritos em pelo menos n UCs
++ Output do nº de alunos inscritos numa turma, ano ou cadeira (ordenado por cadeira, ordem a definir)
++ Output das cadeiras com maior nº de alunos
+
+*** Make a Change
+
++ add :: estudante acrescenta uma cadeira ou turma
++ remove :: estudante retira-se de uma cadeira ou turma
++ switch :: estudante retira-se de uma cadeira ou turma e acrescenta-se noutra
+
+** Filter the Dataset
+
+** Programming Functions
+
++ Output the schedule of Aluno
++ Output the schedule of Turma
++ Output the schedule of UC
+
++ Output the students of Turma
++ Output the students of UC
