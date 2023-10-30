@@ -4,6 +4,7 @@
 #include <map>
 #include <iomanip>
 #include <cmath>
+#include <algorithm>
 
 void Gestor::setCap(const int newCap){
     this->cap = newCap;
@@ -80,6 +81,7 @@ bool Gestor::extractEstudantes(string fname) {
     list<Turma> turmasEstudante = {};
     for (Turma &T : turmas) {
         if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
+            T.attending++;
             turmasEstudante.push_back(T);
         }
     }
@@ -99,6 +101,7 @@ bool Gestor::extractEstudantes(string fname) {
         }
         for (Turma &T : turmas) {
             if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
+                T.attending++;
                 turmasEstudante.push_back(T);
             }
         }
@@ -488,27 +491,136 @@ void Gestor::outputOcupaçãoAno(int ano) {
 
 }
 
+bool Gestor::assessUCLimit(Estudante e) {
+    return e.getSchedule().size() + 1 <= 7;
+}
 
-bool Gestor::makePedido(int id, string codigoUC1, string codigoTurma1, string codigoUC2, string codigoTurma2) {
-    /*Estudante e = Estudante(id, "");
-    set<Estudante>::iterator it = find(estudantes.begin(), estudantes.end(), e);
-    e = *it;
-    Turma t1, t2;
-    for(Turma t : turmas) {
-        if (t.getcodigoTurma() == codigoTurma1 && t.getcodigoUC() == codigoUC1) {
-            t1 = t;
-        } else if (t.getcodigoTurma() == codigoTurma2 && t.getcodigoUC() == codigoUC2) {
-            t2 = t;
+/*bool Gestor::assessTurmaVacancy(Turma t) {
+    return t.attending <= cap;
+}*/
+
+bool Gestor::assessScheduleConflict(Estudante e, Turma nt) {
+    // assume-se que as turmas default do estudante não têm conflito.
+    for (Turma t : e.getSchedule()) {
+        for (Aula a : t.getAulas()) {
+            for (Aula na : nt.getAulas()) {
+                if(a.getDia() == na.getDia() && !(a.getHoraInicio() + a.getDuracao() <= na.getHoraInicio() || na.getHoraInicio() + na.getDuracao() <= a.getHoraInicio())) {
+                    return false;
+                }
+            }
         }
     }
-    Pedido p = Pedido(e, t1, t2, "");*/
     return true;
 }
 
-bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){return true;}
-bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){return true;}
-bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {return true;}
-bool Gestor::desfazerÚltimoPedido(){return true;}
+bool Gestor::assessUCTurmaSingularity(Estudante e, Turma nt) {
+    // assume-se que as turmas default do estudante não têm conflito.
+    for (Turma t : e.getSchedule()) {
+        if (t.getcodigoUC() == nt.getcodigoUC()) return false;
+    }
+    return true;
+}
+
+bool Gestor::assessTurmaCap(Turma t) {
+    return t.attending + 1 <= cap;
+}
+
+bool Gestor::assessBalance(string idUC, string idTurma, int u) {
+    //assumindo que o último 'class' remete para 'aula' e não para 'turma' -> procurar apenas as turmas com aquele idTurma
+    int max = 0, min = cap, n;
+    for (Turma tu : turmas) {
+        if (tu.getcodigoTurma() == idTurma) {
+            n = tu.attending;
+            if (tu.getcodigoUC() == idUC) {
+                n += u; // u = -1 ou u = 1
+            }
+            if (n > max) max = n;
+            if (n < min) min = n;
+        }
+    }
+    //assumindo que as turmas default seguem esta regra
+    return (max - min) <= 4;
+}
+
+// de momento, funcionam somente para as turmas (uc -> codigoTurma = "").
+
+bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){
+    //assume-se que a remoção de UC e a remoção de turma consistem na mesma operação
+    bool removed = false;
+    Estudante target(id, "", {});
+    int i = binarySearchEstudantes(id);
+    if (i == -1){
+        return false;
+    }
+
+    if (!assessBalance(codigoUC, codigoTurma, -1)) return false;
+    list<Turma> newSchedule = {};
+    for(Turma &t : estudantes[i].getSchedule()) {
+        cout << t.attending << endl;
+        if (t.getcodigoTurma() == codigoTurma && t.getcodigoUC() == codigoUC) {
+            removed = true;
+            t.attending--; //attending não muda :(
+        } else {
+            newSchedule.push_back(t);
+        }
+    }
+
+    for(Turma t : estudantes[i].getSchedule()) {
+        cout << t.attending << endl;
+    }
+    for (Turma t : newSchedule) {
+        cout << t.getcodigoUC() << endl;
+    }
+    if (removed) estudantes[i].setSchedule(newSchedule);
+    return removed;
+}
+
+bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
+    /*int i = 0;
+    while (i != estudantes.size()) {
+        if (estudantes[i].getID() == id) {
+            break;
+        }
+        i++;
+    }
+    if (i == estudantes.size()) return false; // o estudante não existe
+    return true;*/
+    Estudante target(id, "", {});
+    int i = binarySearchEstudantes(id);
+    if (i == -1){
+        return false; //estudante não existe.
+    }
+
+    int j = 0;
+    while (j < turmas.size()) {
+        if (turmas[j].getcodigoTurma() == codigoTurma && turmas[j].getcodigoUC() == codigoUC) break;
+        j++;
+    }
+    if (j == turmas.size()) return false;
+
+    cout << turmas[j].getcodigoUC() << " " << turmas[j].getcodigoTurma() << " " << turmas[j].attending << endl; //* attending sobe 4???
+
+    if (!(assessUCLimit(estudantes[i]) && assessScheduleConflict(estudantes[i],turmas[j]) && assessUCTurmaSingularity(estudantes[i],turmas[j])
+    && assessTurmaCap(turmas[j]) && assessBalance(turmas[j].getcodigoUC(), turmas[j].getcodigoTurma(), +1))) return false;
+    estudantes[i].addToSchedule(turmas[j]);
+    turmas[j].attending++;
+
+    for(Turma &t : estudantes[i].getSchedule()) {
+        cout << t.getcodigoUC() << " " << t.getcodigoTurma() << " " << t.attending << endl;
+    }
+
+    return true;
+}
+
+bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {
+
+    return true;
+}
+
+bool Gestor::desfazerÚltimoPedido(){
+
+    return true;
+}
 
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {

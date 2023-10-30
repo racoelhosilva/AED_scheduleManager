@@ -91,6 +91,13 @@ public:
     bool outputOcupaçãoUC(string codigoUC);
     void outputOcupaçãoAno(int ano);
 
+    bool assessUCLimit(Estudante e);
+    //bool assessTurmaVacancy(Turma t);
+    bool assessScheduleConflict(Estudante e, Turma nt);
+    bool assessUCTurmaSingularity(Estudante e, Turma nt);
+    bool assessTurmaCap(Turma t);
+    bool assessBalance(string idUC, string idTurma, int u);
+
     // Falta função para verificar se pode trocar
     bool pedidoRemoção(int id, string codigoUC, string codigoTurma);
     bool pedidoInserção(int id, string codigoUC, string codigoTurma);

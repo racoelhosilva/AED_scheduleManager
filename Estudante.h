@@ -18,7 +18,7 @@ class Estudante {
 
         int const getID() const;
         string const getName() const;
-        list<Turma> const getSchedule() const;
+        list<Turma> & getSchedule();
 
         void setSchedule(list<Turma> newSchedule);
         void addToSchedule(Turma t);

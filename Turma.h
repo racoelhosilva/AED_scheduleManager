@@ -10,6 +10,8 @@ private:
     list<Aula> aulas;
 
 public:
+    int attending;
+
     Turma();
     Turma(string codigoUC, string codigoTurma);
     string getcodigoUC() const;
