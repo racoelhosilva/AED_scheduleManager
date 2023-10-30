@@ -112,6 +112,9 @@ public:
     bool desfazerÚltimoPedido();
 
     void saveChanges(string fname);
+    void writeStudentClasses(string fname);
+    void writeDoneRequests(string fname);
+    void writeInvalidRequests(string fname);
 
     void sortTurmas();
     int binarySearchTurmas(int id);

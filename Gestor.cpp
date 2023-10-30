@@ -605,10 +605,8 @@ bool Gestor::existemMudanças() {
 
 bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
     //assume-se que a remoção de UC e a remoção de turma consistem na mesma operação
-    Pedido pedido(id, codigoUC, codigoTurma, "R");
     int idx = binarySearchEstudantes(id);
     if (idx == -1){
-        pedidosInválidos.push(pedido);
         return false;
     }
 
@@ -622,7 +620,6 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
         }
     }
     if (!turmaFound) {
-        pedidosInválidos.push(pedido);
         return false;
     }
 
@@ -635,8 +632,8 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
         }
     }
 
-    if (tIdx == -1){pedidosInválidos.push(pedido);return false;}
-    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {pedidosInválidos.push(pedido);return false;}
+    if (tIdx == -1){return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {return false;}
 
     estudantes[idx].setSchedule(newSchedule);
     for (auto t : turmas){
@@ -645,16 +642,12 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
             break;
         }
     }
-    pedidosRealizados.push(pedido);
     return true;
 }
 
 bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
-    Pedido pedido(id, codigoUC, codigoTurma, "I");
-
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
-        pedidosInválidos.push(pedido);
         return false; //estudante não existe.
     }
     int tIdx = -1;
@@ -665,25 +658,22 @@ bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
         }
     }
 
-    if (tIdx == -1){pedidosInválidos.push(pedido);return false;}
-    if (!assessUCLimit(estudantes[eIdx].getSchedule())) {pedidosInválidos.push(pedido);return false;}
-    if (!assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) { pedidosInválidos.push(pedido);return false;}
-    if (!assessTurmaCap(turmas[tIdx])){pedidosInválidos.push(pedido);return false;}
-    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {pedidosInválidos.push(pedido);return false;}
-    if (!assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {pedidosInválidos.push(pedido);return false;}
+    if (tIdx == -1){return false;}
+    if (!assessUCLimit(estudantes[eIdx].getSchedule())) {return false;}
+    if (!assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) {return false;}
+    if (!assessTurmaCap(turmas[tIdx])){return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {return false;}
+    if (!assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {return false;}
 
     estudantes[eIdx].addToSchedule(turmas[tIdx]);
     turmas[tIdx].increaseOccupation();
-    pedidosRealizados.push(pedido);
     return true;
 }
 
 bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {
-    Pedido pedido(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova, "T");
 
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
-        pedidosInválidos.push(pedido);
 
         cout << "Aluno não existe.\n";
         return false; //estudante não existe.
@@ -698,7 +688,6 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
         }
     }
     if (!turmaFound) {
-        pedidosInválidos.push(pedido);
         cout << "Turma não encontrada.\n";
         return false;
     }
@@ -710,12 +699,12 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
             break;
         }
     }
-    if (tIdxNova == -1){pedidosInválidos.push(pedido);cout << "Turma não existe.\n";return false;}
-    if (!assessUCLimit(newSchedule)) {pedidosInválidos.push(pedido);cout << "Limite de UCs excedido.\n";return false;}
-    if (!assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {pedidosInválidos.push(pedido);cout << "Conflito de horários.\n";return false;}
-    if (!assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) { pedidosInválidos.push(pedido);cout << "Singularidade :/.\n";return false;}
-    if (!assessTurmaCap(turmas[tIdxNova])){pedidosInválidos.push(pedido);cout << "Limite de alunos na turma excedido.\n";return false;}
-    if (!assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), codigoTurmaAtual)) {pedidosInválidos.push(pedido);cout << "Equilíbrio fodido.\n";return false;}
+    if (tIdxNova == -1){cout << "Turma não existe.\n";return false;}
+    if (!assessUCLimit(newSchedule)) {cout << "Limite de UCs excedido.\n";return false;}
+    if (!assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {cout << "Conflito de horários.\n";return false;}
+    if (!assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) {cout << "Singularidade :/.\n";return false;}
+    if (!assessTurmaCap(turmas[tIdxNova])){cout << "Limite de alunos na turma excedido.\n";return false;}
+    if (!assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), codigoTurmaAtual)) {cout << "Equilíbrio fodido.\n";return false;}
 
     estudantes[eIdx].setSchedule(newSchedule);
     for (auto t : turmas){
@@ -727,7 +716,6 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
 
     estudantes[eIdx].addToSchedule(turmas[tIdxNova]);
     turmas[tIdxNova].increaseOccupation();
-    pedidosRealizados.push(pedido);
     return true;
 }
 
