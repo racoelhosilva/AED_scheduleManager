@@ -25,7 +25,6 @@ public:
     string getCodigoTurmaNova() {return codigoTurmaNova;}
     string getTipo() {return tipo;}
 
-
 };
 
 
