@@ -50,9 +50,8 @@ class Gestor {
 private:
     vector<Turma> turmas;
     vector<Estudante> estudantes;
-    queue<Pedido> pedidos;
     stack<Pedido> pedidosRealizados;
-    list<Pedido> pedidosInválidos;
+    queue<Pedido> pedidosInválidos;
     int cap = 30;
 
     map<int,string> numToWeekday = {{0, "Monday"},{1, "Tuesday"},{2, "Wednesday"},{3, "Thursday"},{4, "Friday"}};

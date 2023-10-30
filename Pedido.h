@@ -4,17 +4,24 @@
 #include "Estudante.h"
 
 class Pedido {
-    public:
-        Pedido(Estudante &e, Turma& t1, Turma& t2, string type);
+private:
+    int studentId;
+    int codigoUC;
+    int codigoTurma;
+    int codigoUCNova;
+    int codigoTurmaNova;
+    string tipo;
 
-        bool assessValidity();
+public:
+    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string type);
+    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova, string type);
 
-        void addUC(Estudante& e, Turma& t1);
-        void removeUC(Estudante& e, Turma& t1);
-        void switchUC(Estudante& e, Turma& t1, Turma& t2);
-        void addTurma(Estudante& e, Turma& t1);
-        void removeTurma(Estudante& e, Turma& t1);
-        void switchTurma(Estudante& e, Turma& t1, Turma& t2);
+    int getId() {return studentId;}
+    int getCodigoUC() {return codigoUC};
+    int getCodigoTurma() {return codigoTurma;}
+    int getCodigoUCNova() {return codigoUCNova;}
+    int getCodigoTurmaNova() {return codigoTurmaNova;}
+    string getTipo() {return tipo;}
 
 
 };
