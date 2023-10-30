@@ -732,8 +732,14 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
 }
 
 bool Gestor::desfazerÚltimoPedido(){
-
-    return true;
+    if (pedidosRealizados.top().getTipo() == "R") {
+        procPedidoInserção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    } else if (pedidosRealizados.top().getTipo() == "I") {
+        procPedidoRemoção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    } else if (pedidosRealizados.top().getTipo() == "T") {
+        procPedidoTroca(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUCNova(), pedidosRealizados.top().getCodigoTurmaNova(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    }
+    pedidosRealizados.pop();
 }
 
 // Testing Functions for the extract
