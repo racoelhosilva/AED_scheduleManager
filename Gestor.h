@@ -105,6 +105,7 @@ public:
     void procPedido();
     void procTodosPedidos();
     bool existemMudanças();
+    bool faltamProcPedidos();
 
     bool procPedidoRemoção(int id, string codigoUC, string codigoTurma);
     bool procPedidoInserção(int id, string codigoUC, string codigoTurma);

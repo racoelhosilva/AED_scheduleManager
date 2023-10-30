@@ -665,11 +665,11 @@ void Interface::requestMenu(){
             break;}
         case 5:{
             if (!gestor.existemMudanças()){
-                cout << "Operação não permitida! Nenhuma alteração realizada.";
+                cout << "Operação não permitida! Nenhuma alteração realizada.\n";
                 this->requestMenu();
             }
             if (!gestor.desfazerÚltimoPedido()){
-                cout << "Operação não permitida!";
+                cout << "Operação não permitida!\n";
                 this->requestMenu();
             }
             this->inputWait();
@@ -776,9 +776,31 @@ void Interface::closeMenu() {
             cin.ignore(INT_MAX, '\n');
         }
         if (savingOption == "1"){
+            if (gestor.faltamProcPedidos()){
+                cout << "Faltam realizar pedidos, deseja realizá-los?\n";
+                cout << "\t\t1. Sim\t\t\t\t2.Não\n";
+                cout << "Opção: ";
+
+                string procOption;
+                cin >> procOption;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+
+                while(procOption != "1" && procOption != "2") {
+                    cout << "Input inválido. Opção: ";
+                    cin >> procOption;
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                }
+                if (procOption == "1"){
+                    gestor.procTodosPedidos();
+                }
+            }
             string fname = "../updated_students_classes.csv";
             gestor.saveChanges(fname);
         }
+
+
     }
 
     cout << "Obrigado por usar o Gestor de Horários.\n";
