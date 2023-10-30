@@ -800,7 +800,28 @@ void Gestor::outputAllEstudantes(int order) {
 }
 
 void Gestor::saveChanges(string fname) {
+    writeStudentClasses(fname);
+
+    if (!pedidosRealizados.empty())
+        writeDoneRequests("valid_requests.txt");
+    if (!pedidosInválidos.empty())
+        writeInvalidRequests("invalid_requests.txt");
+
     cout << "Alterações guardadas!\n";
+}
+
+void Gestor::writeDoneRequests(string fname){return;}
+void Gestor::writeInvalidRequests(string fname){return;}
+
+void Gestor::writeStudentClasses(string fname) {
+    ofstream fileWriter(fname);
+    fileWriter << "StudentCode,StudentName,UcCode,ClassCode\r";
+    for (auto e : estudantes){
+        for (auto t : e.getSchedule()){
+            fileWriter << e.getID() << ',' << e.getName() << ',' << t.getcodigoUC() << ',' << t.getcodigoTurma() << '\r';
+        }
+    }
+    fileWriter.close();
 }
 
 void Gestor::sortTurmas() {
