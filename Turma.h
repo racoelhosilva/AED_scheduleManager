@@ -8,9 +8,9 @@ private:
     string codigoUC;
     string codigoTurma;
     list<Aula> aulas;
-
+    int occupation = 0;
 public:
-    int attending;
+
 
     Turma();
     Turma(string codigoUC, string codigoTurma);
@@ -18,6 +18,9 @@ public:
     string getcodigoTurma() const;
     list<Aula> getAulas() const;
     void addAulas(const Aula& aula);
+    const int getOccupation() const;
+    void increaseOccupation();
+    void decreaseOccupation();
 };
 
 

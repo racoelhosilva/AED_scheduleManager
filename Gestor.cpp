@@ -10,7 +10,6 @@ void Gestor::setCap(const int newCap){
     this->cap = newCap;
 }
 
-
 bool Gestor::extractTurmas(string fname) {
     ifstream fileReader(fname);
     string line;
@@ -81,8 +80,8 @@ bool Gestor::extractEstudantes(string fname) {
     list<Turma> turmasEstudante = {};
     for (Turma &T : turmas) {
         if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
-            T.attending++;
             turmasEstudante.push_back(T);
+            T.increaseOccupation();
         }
     }
 
@@ -101,8 +100,8 @@ bool Gestor::extractEstudantes(string fname) {
         }
         for (Turma &T : turmas) {
             if (T.getcodigoTurma() == classID && T.getcodigoUC() == ucID) {
-                T.attending++;
                 turmasEstudante.push_back(T);
+                T.increaseOccupation();
             }
         }
     }
@@ -522,7 +521,7 @@ bool Gestor::assessUCTurmaSingularity(Estudante e, Turma nt) {
 }
 
 bool Gestor::assessTurmaCap(Turma t) {
-    return t.attending + 1 <= cap;
+    return t.getOccupation() + 1 <= cap;
 }
 
 bool Gestor::assessBalance(string idUC, string idTurma, int u) {
@@ -530,7 +529,7 @@ bool Gestor::assessBalance(string idUC, string idTurma, int u) {
     int max = 0, min = cap, n;
     for (Turma tu : turmas) {
         if (tu.getcodigoTurma() == idTurma) {
-            n = tu.attending;
+            n = tu.getOccupation();
             if (tu.getcodigoUC() == idUC) {
                 n += u; // u = -1 ou u = 1
             }
@@ -556,17 +555,17 @@ bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){
     if (!assessBalance(codigoUC, codigoTurma, -1)) return false;
     list<Turma> newSchedule = {};
     for(Turma &t : estudantes[i].getSchedule()) {
-        cout << t.attending << endl;
+        cout << t.getOccupation() << endl;
         if (t.getcodigoTurma() == codigoTurma && t.getcodigoUC() == codigoUC) {
             removed = true;
-            t.attending--; //attending não muda :(
+            t.decreaseOccupation(); //attending não muda :(
         } else {
             newSchedule.push_back(t);
         }
     }
 
     for(Turma t : estudantes[i].getSchedule()) {
-        cout << t.attending << endl;
+        cout << t.getOccupation()<< endl;
     }
     for (Turma t : newSchedule) {
         cout << t.getcodigoUC() << endl;
@@ -598,15 +597,15 @@ bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
     }
     if (j == turmas.size()) return false;
 
-    cout << turmas[j].getcodigoUC() << " " << turmas[j].getcodigoTurma() << " " << turmas[j].attending << endl; //* attending sobe 4???
+    cout << turmas[j].getcodigoUC() << " " << turmas[j].getcodigoTurma() << " " << turmas[j].getOccupation() << endl; //* attending sobe 4???
 
     if (!(assessUCLimit(estudantes[i]) && assessScheduleConflict(estudantes[i],turmas[j]) && assessUCTurmaSingularity(estudantes[i],turmas[j])
     && assessTurmaCap(turmas[j]) && assessBalance(turmas[j].getcodigoUC(), turmas[j].getcodigoTurma(), +1))) return false;
     estudantes[i].addToSchedule(turmas[j]);
-    turmas[j].attending++;
+    turmas[j].increaseOccupation();
 
     for(Turma &t : estudantes[i].getSchedule()) {
-        cout << t.getcodigoUC() << " " << t.getcodigoTurma() << " " << t.attending << endl;
+        cout << t.getcodigoUC() << " " << t.getcodigoTurma() << " " << t.getOccupation() << endl;
     }
 
     return true;

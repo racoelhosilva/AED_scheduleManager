@@ -29,4 +29,15 @@ void Turma::addAulas(const Aula& aula) {
     aulas.push_back(aula);
 }
 
+const int Turma::getOccupation() const{
+    return occupation;
+}
 
+void Turma::increaseOccupation(){
+    occupation++;
+}
+void Turma::decreaseOccupation(){
+    if (occupation > 0){
+        occupation--;
+    }
+}
