@@ -569,6 +569,18 @@ bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){
         return false;
     }
 
+    //temporário
+    int tIdx = -1;
+    for (int i = 0; i < turmas.size(); i++){
+        if (turmas[i].getcodigoUC() == codigoUC && turmas[i].getcodigoTurma() == codigoTurma){
+            tIdx = i;
+            break;
+        }
+    }
+
+    if (tIdx == -1){pedidosInválidos.push(pedido);return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma(), -1)) {pedidosInválidos.push(pedido);return false;}
+
     estudantes[idx].setSchedule(newSchedule);
     for (auto t : turmas){
         if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma){
@@ -597,12 +609,11 @@ bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
     }
 
     if (tIdx == -1){pedidosInválidos.push(pedido);return false;}
-    if (assessUCLimit(estudantes[eIdx].getSchedule())) {pedidosInválidos.push(pedido);return false;}
-    if (assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {pedidosInválidos.push(pedido);return false;}
-    if (assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) { pedidosInválidos.push(pedido);return false;}
-    if (assessTurmaCap(turmas[tIdx])){pedidosInválidos.push(pedido);return false;}
-    if (assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma(), +1)) {pedidosInválidos.push(pedido);return false;}
-
+    if (!assessUCLimit(estudantes[eIdx].getSchedule())) {pedidosInválidos.push(pedido);return false;}
+    if (!assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {pedidosInválidos.push(pedido);return false;}
+    if (!assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) { pedidosInválidos.push(pedido);return false;}
+    if (!assessTurmaCap(turmas[tIdx])){pedidosInválidos.push(pedido);return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma(), +1)) {pedidosInválidos.push(pedido);return false;}
 
     estudantes[eIdx].addToSchedule(turmas[tIdx]);
     turmas[tIdx].increaseOccupation();
@@ -616,6 +627,8 @@ bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, 
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
         pedidosInválidos.push(pedido);
+
+        cout << "Aluno não existe.\n";
         return false; //estudante não existe.
     }
     list<Turma> newSchedule = {};
@@ -629,6 +642,7 @@ bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, 
     }
     if (!turmaFound) {
         pedidosInválidos.push(pedido);
+        cout << "Turma não encontrada.\n";
         return false;
     }
 
@@ -639,12 +653,12 @@ bool Gestor::pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, 
             break;
         }
     }
-    if (tIdxNova == -1){pedidosInválidos.push(pedido);return false;}
-    if (assessUCLimit(newSchedule)) {pedidosInválidos.push(pedido);return false;}
-    if (assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {pedidosInválidos.push(pedido);return false;}
-    if (assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) { pedidosInválidos.push(pedido);return false;}
-    if (assessTurmaCap(turmas[tIdxNova])){pedidosInválidos.push(pedido);return false;}
-    if (assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), +1)) {pedidosInválidos.push(pedido);return false;}
+    if (tIdxNova == -1){pedidosInválidos.push(pedido);cout << "Turma não existe.\n";return false;}
+    if (!assessUCLimit(newSchedule)) {pedidosInválidos.push(pedido);cout << "Limite de UCs excedido.\n";return false;}
+    if (!assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {pedidosInválidos.push(pedido);cout << "Conflito de horários.\n";return false;}
+    if (!assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) { pedidosInválidos.push(pedido);cout << "Singularidade :/.\n";return false;}
+    if (!assessTurmaCap(turmas[tIdxNova])){pedidosInválidos.push(pedido);cout << "Limite de alunos na turma excedido.\n";return false;}
+    if (!assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), +1)) {pedidosInválidos.push(pedido);cout << "Equilíbrio fodido.\n";return false;}
 
     estudantes[eIdx].setSchedule(newSchedule);
     for (auto t : turmas){
