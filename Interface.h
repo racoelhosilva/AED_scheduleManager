@@ -6,7 +6,6 @@
 class Interface {
 private:
     Gestor gestor;
-    int alteraçõesFeitas = 0;
 
     void header();
     void footer();
@@ -42,6 +41,7 @@ public:
 
     // Requests
     void requestMenu();
+    void processingMenu();
 
     // Total Listing
     void totalListingMenu();

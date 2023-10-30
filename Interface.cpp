@@ -510,13 +510,13 @@ void Interface::occupationMenu(){
 
 void Interface::requestMenu(){
     cout << "Que alterações pretende fazer?\n";
-    cout << "\t1. Remoção\t\t2. Inserção\t\t3. Troca\t\t4. Anular Última Alteração\t\t5. Voltar\n";
+    cout << "\t1. Remoção\t\t2. Inserção\t\t3. Troca\t\t4. Processar\t\t5. Anular Última Alteração\t\t6. Voltar\n";
     cout << "Opção: ";
     string actionOption;
     cin >> actionOption;
     cin.clear();
     cin.ignore(INT_MAX, '\n');
-    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5"){
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5" && actionOption != "6"){
         cout << "Input inválido. Opção: ";
         cin >> actionOption;
         cin.clear();
@@ -558,11 +558,8 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoRemoção(id, codigoUC, codigoTurma)){
-                cout << "Operação não permitida!";
-                this->requestMenu();
-            }
-            alteraçõesFeitas++;
+            gestor.novoPedidoRemoção(id, codigoUC, codigoTurma);
+            cout << "Pedido Realizado\n";
             this->inputWait();
             break;}
         case 2:{
@@ -599,11 +596,8 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoInserção(id, codigoUC, codigoTurma)){
-                cout << "Operação não permitida!";
-                this->requestMenu();
-            }
-            alteraçõesFeitas++;
+            gestor.novoPedidoInserção(id, codigoUC, codigoTurma);
+            cout << "Pedido adicionado\n";
             this->inputWait();
             break;}
         case 3:{
@@ -662,16 +656,15 @@ void Interface::requestMenu(){
                 cin.clear();
                 cin.ignore(INT_MAX, '\n');
             }
-            if (!gestor.pedidoTroca(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova)){
-                cout << "Operação não permitida!";
-                this->requestMenu();
-            }
-            alteraçõesFeitas++;
+            gestor.novoPedidoTroca(id, codigoUCAtual, codigoTurmaAtual,codigoUCNova, codigoTurmaNova);
+            cout << "Pedido adicionado\n";
             this->inputWait();
             break;}
-
         case 4:{
-            if (alteraçõesFeitas <= 0){
+            this->processingMenu();
+            break;}
+        case 5:{
+            if (!gestor.existemMudanças()){
                 cout << "Operação não permitida! Nenhuma alteração realizada.";
                 this->requestMenu();
             }
@@ -679,7 +672,6 @@ void Interface::requestMenu(){
                 cout << "Operação não permitida!";
                 this->requestMenu();
             }
-            alteraçõesFeitas--;
             this->inputWait();
             break;}
         default:{
@@ -689,6 +681,40 @@ void Interface::requestMenu(){
 
     this->footer();
     this->mainMenu();
+}
+
+void Interface::processingMenu() {
+    cout << "Como deseja processar os pedidos?\n";
+    cout << "\t1. Processar 1 pedido\t\t2. Processar todos\t\t3. Voltar\n";
+    cout << "Opção: ";
+    string actionOption;
+    cin >> actionOption;
+    cin.clear();
+    cin.ignore(INT_MAX, '\n');
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3"){
+        cout << "Input inválido. Opção: ";
+        cin >> actionOption;
+        cin.clear();
+        cin.ignore(INT_MAX, '\n');
+    }
+    switch (stoi(actionOption)){
+        case 1:{
+            gestor.procPedido();
+            cout << "Pedido processado\n";
+            this->inputWait();
+            break;}
+        case 2:{
+            gestor.procTodosPedidos();
+            cout << "Pedidos processados\n";
+            this->inputWait();
+            break;}
+        default:{
+            cout << "\"Voltar\" selecionado!\n";
+            break;}
+    }
+
+    this->footer();
+    this->requestMenu();
 }
 
 void Interface::totalListingMenu() {
@@ -732,7 +758,7 @@ void Interface::totalListingMenu() {
 void Interface::closeMenu() {
     this->header();
 
-    if (alteraçõesFeitas > 0){
+    if (gestor.existemMudanças()){
         cout << "Deseja guardar as alterações realizadas?\n";
         cout << "\t\t1. Sim\t\t\t\t2.Não\n";
         cout << "Opção: ";

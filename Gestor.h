@@ -50,6 +50,7 @@ class Gestor {
 private:
     vector<Turma> turmas;
     vector<Estudante> estudantes;
+    queue<Pedido> pedidos;
     stack<Pedido> pedidosRealizados;
     queue<Pedido> pedidosInválidos;
     int cap = 30;
@@ -95,12 +96,19 @@ public:
     bool assessScheduleConflict(list<Turma> schedule, Turma nt);
     bool assessUCTurmaSingularity(list<Turma> schedule, Turma nt);
     bool assessTurmaCap(Turma t);
-    bool assessBalance(string idUC, string idTurma, int u);
+    bool assessBalance(string idUC, string idTurma, string idTurmaAnterior);
 
-    // Falta função para verificar se pode trocar
-    bool pedidoRemoção(int id, string codigoUC, string codigoTurma);
-    bool pedidoInserção(int id, string codigoUC, string codigoTurma);
-    bool pedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova);
+    void novoPedidoRemoção(int id, string codigoUC, string codigoTurma);
+    void novoPedidoInserção(int id, string codigoUC, string codigoTurma);
+    void novoPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova);
+
+    void procPedido();
+    void procTodosPedidos();
+    bool existemMudanças();
+
+    bool procPedidoRemoção(int id, string codigoUC, string codigoTurma);
+    bool procPedidoInserção(int id, string codigoUC, string codigoTurma);
+    bool procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova);
     bool desfazerÚltimoPedido();
 
     void saveChanges(string fname);
