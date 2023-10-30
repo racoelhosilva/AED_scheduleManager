@@ -573,7 +573,7 @@ void Gestor::novoPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
 
 void Gestor::procPedido(){
     Pedido aProcessar = pedidos.front();
-    cout << "A executar:\t" << aProcessar.getTipo() << ": " << aProcessar.getId();
+    cout << "A executar:\t" << aProcessar.getTipo() << ": " << aProcessar.getId() << '\n';
     bool done = false;
     if (aProcessar.getTipo() == "R"){
         done = (procPedidoRemoção(aProcessar.getId(), aProcessar.getCodigoUC(), aProcessar.getCodigoTurma()));
@@ -601,6 +601,10 @@ void Gestor::procTodosPedidos(){
 
 bool Gestor::existemMudanças() {
     return pedidosRealizados.empty();
+}
+
+bool Gestor::faltamProcPedidos(){
+    return pedidos.empty();
 }
 
 bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
@@ -806,7 +810,68 @@ void Gestor::outputAllEstudantes(int order) {
 }
 
 void Gestor::saveChanges(string fname) {
+    writeStudentClasses(fname);
+
+    if (!pedidosRealizados.empty())
+        writeDoneRequests("valid_requests.txt");
+    if (!pedidosInválidos.empty())
+        writeInvalidRequests("invalid_requests.txt");
+
     cout << "Alterações guardadas!\n";
+}
+
+void Gestor::writeDoneRequests(string fname){
+    vector<Pedido> toWrite;
+    while (!pedidosRealizados.empty()){
+        toWrite.push_back(pedidosRealizados.top());
+        pedidosRealizados.pop();
+    }
+
+    ofstream fileWriter(fname);
+    for (auto p = toWrite.rbegin(); p != toWrite.rend(); p++){
+        Pedido current = *p;
+        if (current.getTipo() == "T")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                       "\t(" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ") -> (" <<
+                       current.getCodigoTurmaNova() << ',' << current.getCodigoTurmaNova() << ")\n";
+        if (current.getTipo() == "R")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                       "\t(" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ") ->\n";
+        if (current.getTipo() == "I")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                       "\t-> (" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ")\n";
+    }
+    fileWriter.close();
+}
+
+void Gestor::writeInvalidRequests(string fname){
+    ofstream fileWriter(fname);
+    while (!pedidosInválidos.empty()){
+        Pedido current = pedidosInválidos.front();
+        if (current.getTipo() == "T")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                        "\t(" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ") -> (" <<
+                        current.getCodigoTurmaNova() << ',' << current.getCodigoTurmaNova() << ")\n";
+        if (current.getTipo() == "R")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                       "\t(" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ") ->\n";
+        if (current.getTipo() == "I")
+            fileWriter << current.getTipo() << '\t' << current.getId() <<
+                       "\t-> (" << current.getCodigoUC() << ',' << current.getCodigoTurma() << ")\n";
+        pedidosInválidos.pop();
+    }
+    fileWriter.close();
+}
+
+void Gestor::writeStudentClasses(string fname) {
+    ofstream fileWriter(fname);
+    fileWriter << "StudentCode,StudentName,UcCode,ClassCode\r";
+    for (auto e : estudantes){
+        for (auto t : e.getSchedule()){
+            fileWriter << e.getID() << ',' << e.getName() << ',' << t.getcodigoUC() << ',' << t.getcodigoTurma() << '\r';
+        }
+    }
+    fileWriter.close();
 }
 
 void Gestor::sortTurmas() {
