@@ -174,9 +174,9 @@ void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
         h2 = int(x.first.getHoraInicio() + x.first.getDuracao());
         m2 = (x.first.getHoraInicio() + x.first.getDuracao() - h2) == 0.0 ? 0 : 30;
         cout << '\t' <<
-            setw(2) << setfill('0') << h1 << ':' << setw(2) << setfill('0') << m1 << " - " <<
-            setw(2) << setfill('0') << h2 << ':' << setw(2) << setfill('0') << m2 << '\t' <<
-            x.second.getcodigoUC() << "  (" << x.first.getTipo() << ")\t" << x.second.getcodigoTurma() << '\n';
+             setw(2) << setfill('0') << h1 << ':' << setw(2) << setfill('0') << m1 << " - " <<
+             setw(2) << setfill('0') << h2 << ':' << setw(2) << setfill('0') << m2 << '\t' <<
+             x.second.getcodigoUC() << "  (" << x.first.getTipo() << ")\t" << x.second.getcodigoTurma() << '\n';
     }
 }
 
@@ -720,8 +720,14 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
 }
 
 bool Gestor::desfazerÚltimoPedido(){
-
-    return true;
+    if (pedidosRealizados.top().getTipo() == "R") {
+        procPedidoInserção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    } else if (pedidosRealizados.top().getTipo() == "I") {
+        procPedidoRemoção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    } else if (pedidosRealizados.top().getTipo() == "T") {
+        procPedidoTroca(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUCNova(), pedidosRealizados.top().getCodigoTurmaNova(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+    }
+    pedidosRealizados.pop();
 }
 
 // Testing Functions for the extract
@@ -734,8 +740,8 @@ void Gestor::outputAllTurmas() {
 void Gestor::outputAllAulas() {
     for (Turma t : turmas){
         cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << '\t';
-            for (Aula a : t.getAulas())
-                cout << '\t' << numToWeekday[a.getDia()] << ' ' << a.getDuracao() << "     \t|\t";
+        for (Aula a : t.getAulas())
+            cout << '\t' << numToWeekday[a.getDia()] << ' ' << a.getDuracao() << "     \t|\t";
         cout << '\n';
     }
 }
@@ -800,28 +806,7 @@ void Gestor::outputAllEstudantes(int order) {
 }
 
 void Gestor::saveChanges(string fname) {
-    writeStudentClasses(fname);
-
-    if (!pedidosRealizados.empty())
-        writeDoneRequests("valid_requests.txt");
-    if (!pedidosInválidos.empty())
-        writeInvalidRequests("invalid_requests.txt");
-
     cout << "Alterações guardadas!\n";
-}
-
-void Gestor::writeDoneRequests(string fname){return;}
-void Gestor::writeInvalidRequests(string fname){return;}
-
-void Gestor::writeStudentClasses(string fname) {
-    ofstream fileWriter(fname);
-    fileWriter << "StudentCode,StudentName,UcCode,ClassCode\r";
-    for (auto e : estudantes){
-        for (auto t : e.getSchedule()){
-            fileWriter << e.getID() << ',' << e.getName() << ',' << t.getcodigoUC() << ',' << t.getcodigoTurma() << '\r';
-        }
-    }
-    fileWriter.close();
 }
 
 void Gestor::sortTurmas() {
