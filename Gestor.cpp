@@ -568,7 +568,7 @@ void Gestor::novoPedidoInserção(int id, string codigoUC, string codigoTurma){
     pedidos.push({id, codigoUC, codigoTurma, "I"});
 }
 void Gestor::novoPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova){
-    pedidos.push({id, codigoUCAtual, codigoTurmaAtual, codigoUCNova, codigoUCNova, "T"});
+    pedidos.push({id, codigoUCAtual, codigoTurmaAtual, codigoUCNova, codigoTurmaNova, "T"});
 }
 
 void Gestor::procPedido(){
