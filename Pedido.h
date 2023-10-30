@@ -6,21 +6,23 @@
 class Pedido {
 private:
     int studentId;
-    int codigoUC;
-    int codigoTurma;
-    int codigoUCNova;
-    int codigoTurmaNova;
+    string codigoUC;
+    string codigoTurma;
+    string codigoUCNova;
+    string codigoTurmaNova;
     string tipo;
 
 public:
-    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string type);
-    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova, string type);
+    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string type) :
+        studentId(id), codigoUC(codigoUCAtual), codigoTurma(codigoTurmaAtual), tipo(type) {};
+    Pedido(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova, string type) :
+        studentId(id), codigoUC(codigoUCAtual), codigoTurma(codigoTurmaAtual), codigoUCNova(codigoUCNova), codigoTurmaNova(codigoTurmaNova), tipo(type) {};
 
     int getId() {return studentId;}
-    int getCodigoUC() {return codigoUC};
-    int getCodigoTurma() {return codigoTurma;}
-    int getCodigoUCNova() {return codigoUCNova;}
-    int getCodigoTurmaNova() {return codigoTurmaNova;}
+    string getCodigoUC() {return codigoUC;};
+    string getCodigoTurma() {return codigoTurma;}
+    string getCodigoUCNova() {return codigoUCNova;}
+    string getCodigoTurmaNova() {return codigoTurmaNova;}
     string getTipo() {return tipo;}
 
 
