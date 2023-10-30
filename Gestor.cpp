@@ -490,31 +490,34 @@ void Gestor::outputOcupaçãoAno(int ano) {
 
 }
 
-bool Gestor::assessUCLimit(Estudante e) {
-    return e.getSchedule().size() + 1 <= 7;
+bool Gestor::assessUCLimit(list<Turma> schedule) {
+    return schedule.size() + 1 <= 7;
 }
 
 /*bool Gestor::assessTurmaVacancy(Turma t) {
     return t.attending <= cap;
 }*/
 
-bool Gestor::assessScheduleConflict(Estudante e, Turma nt) {
+bool Gestor::assessScheduleConflict(list<Turma> schedule, Turma nt) {
     // assume-se que as turmas default do estudante não têm conflito.
-    for (Turma t : e.getSchedule()) {
-        for (Aula a : t.getAulas()) {
-            for (Aula na : nt.getAulas()) {
-                if(a.getDia() == na.getDia() && !(a.getHoraInicio() + a.getDuracao() <= na.getHoraInicio() || na.getHoraInicio() + na.getDuracao() <= a.getHoraInicio())) {
-                    return false;
-                }
+    for (Aula na : nt.getAulas()) {
+        if (na.getTipo() == "T") { continue; }
+        for (Turma t: schedule) {
+            for (Aula a: t.getAulas()) {
+                if (a.getTipo() == "T") { continue; }
+                if (a.getDia() != na.getDia()) { continue; }
+                if (na.getHoraInicio() <= (a.getHoraInicio() + a.getDuracao()) &&
+                    na.getHoraInicio() >= a.getHoraInicio()) { return false; }
+                if ((na.getHoraInicio() + na.getDuracao()) <= (a.getHoraInicio() + a.getDuracao()) &&
+                    (na.getHoraInicio() + na.getDuracao()) >= a.getHoraInicio()) { return false; }
             }
         }
     }
     return true;
 }
-
-bool Gestor::assessUCTurmaSingularity(Estudante e, Turma nt) {
+bool Gestor::assessUCTurmaSingularity(list<Turma> schedule, Turma nt) {
     // assume-se que as turmas default do estudante não têm conflito.
-    for (Turma t : e.getSchedule()) {
+    for (Turma t : schedule) {
         if (t.getcodigoUC() == nt.getcodigoUC()) return false;
     }
     return true;
@@ -572,40 +575,29 @@ bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){
 }
 
 bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
-    /*int i = 0;
-    while (i != estudantes.size()) {
-        if (estudantes[i].getID() == id) {
-            break;
-        }
-        i++;
-    }
-    if (i == estudantes.size()) return false; // o estudante não existe
-    return true;*/
 
-    int idx = binarySearchEstudantes(id);
-    if (idx == -1){
+    int eIdx = binarySearchEstudantes(id);
+    if (eIdx == -1){
         return false; //estudante não existe.
     }
-
-    for (auto t : turmas){
-        if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma){
-            t.decreaseOccupation();
+    int tIdx = -1;
+    for (int i = 0; i < turmas.size(); i++){
+        if (turmas[i].getcodigoUC() == codigoUC && turmas[i].getcodigoTurma() == codigoTurma){
+            tIdx = i;
             break;
         }
     }
 
-    if (j == turmas.size()) return false;
+    if (tIdx == -1){return false;}
+    if (assessUCLimit(estudantes[eIdx].getSchedule())) {return false;}
+    if (assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {return false;}
+    if (assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) { return false;}
+    if (assessTurmaCap(turmas[tIdx])){return false;}
+    if (assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma(), +1) {return false;}
 
-    cout << turmas[j].getcodigoUC() << " " << turmas[j].getcodigoTurma() << " " << turmas[j].getOccupation() << endl; //* attending sobe 4???
 
-    if (!(assessUCLimit(estudantes[i]) && assessScheduleConflict(estudantes[i],turmas[j]) && assessUCTurmaSingularity(estudantes[i],turmas[j])
-    && assessTurmaCap(turmas[j]) && assessBalance(turmas[j].getcodigoUC(), turmas[j].getcodigoTurma(), +1))) return false;
-    estudantes[i].addToSchedule(turmas[j]);
-    turmas[j].increaseOccupation();
-
-    for(Turma &t : estudantes[i].getSchedule()) {
-        cout << t.getcodigoUC() << " " << t.getcodigoTurma() << " " << t.getOccupation() << endl;
-    }
+    estudantes[eIdx].addToSchedule(turmas[tIdx]);
+    turmas[tIdx].increaseOccupation();
 
     return true;
 }

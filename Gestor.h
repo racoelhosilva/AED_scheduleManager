@@ -91,10 +91,10 @@ public:
     bool outputOcupaçãoUC(string codigoUC);
     void outputOcupaçãoAno(int ano);
 
-    bool assessUCLimit(Estudante e);
+    bool assessUCLimit(list<Turma> schedule);
     //bool assessTurmaVacancy(Turma t);
-    bool assessScheduleConflict(Estudante e, Turma nt);
-    bool assessUCTurmaSingularity(Estudante e, Turma nt);
+    bool assessScheduleConflict(list<Turma> schedule, Turma nt);
+    bool assessUCTurmaSingularity(list<Turma> schedule, Turma nt);
     bool assessTurmaCap(Turma t);
     bool assessBalance(string idUC, string idTurma, int u);
 
