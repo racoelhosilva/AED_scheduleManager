@@ -568,7 +568,7 @@ void Gestor::novoPedidoInserção(int id, string codigoUC, string codigoTurma){
     pedidos.push({id, codigoUC, codigoTurma, "I"});
 }
 void Gestor::novoPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova){
-    pedidos.push({id, codigoUCAtual, codigoTurmaAtual, codigoUCNova, codigoUCNova, "T"});
+    pedidos.push({id, codigoUCAtual, codigoTurmaAtual, codigoUCNova, codigoTurmaNova, "T"});
 }
 
 void Gestor::procPedido(){
@@ -607,6 +607,7 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
     //assume-se que a remoção de UC e a remoção de turma consistem na mesma operação
     int idx = binarySearchEstudantes(id);
     if (idx == -1){
+        cout << "ERRO: Aluno não existe.\n";
         return false;
     }
 
@@ -620,10 +621,11 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
         }
     }
     if (!turmaFound) {
+        cout << "ERRO: Turma atual não foi encontrada.\n";
         return false;
     }
 
-    //temporário
+    //temporário - só para assessBalance()
     int tIdx = -1;
     for (int i = 0; i < turmas.size(); i++){
         if (turmas[i].getcodigoUC() == codigoUC && turmas[i].getcodigoTurma() == codigoTurma){
@@ -631,9 +633,7 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
             break;
         }
     }
-
-    if (tIdx == -1){return false;}
-    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {cout << "ERRO: Pedido aumenta desequilíbrio entre as turmas.\n";return false;}
 
     estudantes[idx].setSchedule(newSchedule);
     for (auto t : turmas){
@@ -648,6 +648,7 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
 bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
+        cout << "ERRO: Aluno não existe.\n";
         return false; //estudante não existe.
     }
     int tIdx = -1;
@@ -658,12 +659,12 @@ bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
         }
     }
 
-    if (tIdx == -1){return false;}
-    if (!assessUCLimit(estudantes[eIdx].getSchedule())) {return false;}
-    if (!assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) {return false;}
-    if (!assessTurmaCap(turmas[tIdx])){return false;}
-    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {return false;}
-    if (!assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {return false;}
+    if (tIdx == -1){cout << "ERRO: Turma nova não existe.\n"; return false;}
+    if (!assessUCLimit(estudantes[eIdx].getSchedule())) {cout << "ERRO: Limite de UCs excedido.\n";return false;}
+    if (!assessUCTurmaSingularity(estudantes[eIdx].getSchedule(), turmas[tIdx])) {cout << "ERRO: Estudante já se encontra inscrito nesta UC, mas em outra turma.\n";return false;}
+    if (!assessTurmaCap(turmas[tIdx])){cout << "ERRO: Limite de alunos na turma excedido.\n";return false;}
+    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {cout << "ERRO: Pedido aumenta desequilíbrio entre as turmas.\n";return false;}
+    if (!assessScheduleConflict(estudantes[eIdx].getSchedule() ,turmas[tIdx])) {cout << "ERRO: Conflito de horários.\n";return false;}
 
     estudantes[eIdx].addToSchedule(turmas[tIdx]);
     turmas[tIdx].increaseOccupation();
@@ -675,7 +676,7 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
 
-        cout << "Aluno não existe.\n";
+        cout << "ERRO: Aluno não existe.\n";
         return false; //estudante não existe.
     }
     list<Turma> newSchedule = {};
@@ -688,7 +689,7 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
         }
     }
     if (!turmaFound) {
-        cout << "Turma não encontrada.\n";
+        cout << "ERRO: Turma atual não foi encontrada.\n";
         return false;
     }
 
@@ -699,12 +700,12 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
             break;
         }
     }
-    if (tIdxNova == -1){cout << "Turma não existe.\n";return false;}
-    if (!assessUCLimit(newSchedule)) {cout << "Limite de UCs excedido.\n";return false;}
-    if (!assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {cout << "Conflito de horários.\n";return false;}
-    if (!assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) {cout << "Singularidade :/.\n";return false;}
-    if (!assessTurmaCap(turmas[tIdxNova])){cout << "Limite de alunos na turma excedido.\n";return false;}
-    if (!assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), codigoTurmaAtual)) {cout << "Equilíbrio fodido.\n";return false;}
+    if (tIdxNova == -1){cout << "ERRO: Turma nova não existe.\n";return false;}
+    if (!assessUCLimit(newSchedule)) {cout << "ERRO: Limite de UCs excedido.\n";return false;}
+    if (!assessUCTurmaSingularity(newSchedule ,turmas[tIdxNova])) {cout << "ERRO: Estudante já se encontra inscrito nesta UC, mas em outra turma.\n";return false;}
+    if (!assessTurmaCap(turmas[tIdxNova])){cout << "ERRO: Limite de alunos na turma excedido.\n";return false;}
+    if (!assessBalance(turmas[tIdxNova].getcodigoUC(), turmas[tIdxNova].getcodigoTurma(), codigoTurmaAtual)) {cout << "ERRO: Pedido aumenta desequilíbrio entre as turmas.\n";return false;}
+    if (!assessScheduleConflict(newSchedule ,turmas[tIdxNova])) {cout << "ERRO: Conflito de horários.\n";return false;}
 
     estudantes[eIdx].setSchedule(newSchedule);
     for (auto t : turmas){
