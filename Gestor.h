@@ -39,7 +39,7 @@ struct EstudanteNumDescending {
 };
 
 struct compareHorario{
-    bool operator()(const pair<Aula,string> &a1, const pair<Aula,string> &a2) const {
+    bool operator()(const pair<Aula,Turma> &a1, const pair<Aula,Turma> &a2) const {
         bool compareDia = a1.first.getDia() < a2.first.getDia();
         bool compareHora = a1.first.getDia() == a2.first.getDia() &&  a1.first.getHoraInicio() < a2.first.getHoraInicio();
         return compareDia || compareHora;
@@ -69,7 +69,7 @@ public:
     bool outputHorárioEstudante(int id);
     bool outputHorárioTurma(string codigoTurma);
     bool outputHorárioUC(string codigoUC);
-    void printHorarios(set<pair<Aula,string>, compareHorario> horario);
+    void printHorarios(set<pair<Aula,Turma>, compareHorario> horario);
 
     bool outputListaEstudanteTurma(string codigoTurma, int order);
     bool outputListaEstudanteUC(string codigoUC, int order);
@@ -107,6 +107,7 @@ public:
     void saveChanges(string fname);
 
     void sortTurmas();
+    int binarySearchTurmas(int id);
     void sortEstudantesByNumber();
     int binarySearchEstudantes(int id);
 

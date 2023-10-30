@@ -117,10 +117,10 @@ bool Gestor::outputHorárioEstudante(int id){
     if (idx == -1){
         return false;
     }
-    set<pair<Aula,string>, compareHorario> horario;
+    set<pair<Aula,Turma>, compareHorario> horario;
     for (Turma turma : estudantes[idx].getSchedule()) {
         for (auto aula : turma.getAulas()){
-            horario.insert({aula, turma.getcodigoUC()});
+            horario.insert({aula, {turma.getcodigoUC(), turma.getcodigoTurma()}});
         }
     }cout << "Horário do estudante: " << estudantes[idx].getName() << " (" << id << ")\n";
     printHorarios(horario);
@@ -128,11 +128,11 @@ bool Gestor::outputHorárioEstudante(int id){
 }
 
 bool Gestor::outputHorárioTurma(string codigoTurma){
-    set<pair<Aula,string>, compareHorario> horario;
+    set<pair<Aula,Turma>, compareHorario> horario;
     for (Turma turma : turmas) {
         if (turma.getcodigoTurma() == codigoTurma) {
             for (auto aula: turma.getAulas()) {
-                horario.insert({aula, turma.getcodigoUC()});
+                horario.insert({aula, {turma.getcodigoUC(), turma.getcodigoTurma()}});
             }
         }
     }
@@ -145,11 +145,11 @@ bool Gestor::outputHorárioTurma(string codigoTurma){
 }
 
 bool Gestor::outputHorárioUC(string codigoUC){
-    set<pair<Aula,string>, compareHorario> horario;
+    set<pair<Aula,Turma>, compareHorario> horario;
     for (Turma turma : turmas) {
         if (turma.getcodigoUC() == codigoUC) {
             for (auto aula: turma.getAulas()) {
-                horario.insert({aula, turma.getcodigoUC()});
+                horario.insert({aula, {turma.getcodigoUC(), turma.getcodigoTurma()}});
             }
         }
     }
@@ -161,7 +161,7 @@ bool Gestor::outputHorárioUC(string codigoUC){
     return true;
 }
 
-void Gestor::printHorarios(set<pair<Aula,string>, compareHorario> horario){
+void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
     int currentWeekday = -1;
     for (auto x : horario){
         if (x.first.getDia() > currentWeekday){
@@ -176,7 +176,7 @@ void Gestor::printHorarios(set<pair<Aula,string>, compareHorario> horario){
         cout << '\t' <<
             setw(2) << setfill('0') << h1 << ':' << setw(2) << setfill('0') << m1 << " - " <<
             setw(2) << setfill('0') << h2 << ':' << setw(2) << setfill('0') << m2 << '\t' <<
-            x.second << "  (" << x.first.getTipo() << ")\n";
+            x.second.getcodigoUC() << "  (" << x.first.getTipo() << ")\t" << x.second.getcodigoTurma() << '\n';
     }
 }
 
@@ -545,33 +545,30 @@ bool Gestor::assessBalance(string idUC, string idTurma, int u) {
 
 bool Gestor::pedidoRemoção(int id, string codigoUC, string codigoTurma){
     //assume-se que a remoção de UC e a remoção de turma consistem na mesma operação
-    bool removed = false;
-    Estudante target(id, "", {});
-    int i = binarySearchEstudantes(id);
-    if (i == -1){
+    int idx = binarySearchEstudantes(id);
+    if (idx == -1){
         return false;
     }
 
-    if (!assessBalance(codigoUC, codigoTurma, -1)) return false;
     list<Turma> newSchedule = {};
-    for(Turma &t : estudantes[i].getSchedule()) {
-        cout << t.getOccupation() << endl;
+    bool turmaFound = false;
+    for(Turma &t : estudantes[idx].getSchedule()) {
         if (t.getcodigoTurma() == codigoTurma && t.getcodigoUC() == codigoUC) {
-            removed = true;
-            t.decreaseOccupation(); //attending não muda :(
+            turmaFound = true;
         } else {
             newSchedule.push_back(t);
         }
     }
+    if (!turmaFound) return false;
 
-    for(Turma t : estudantes[i].getSchedule()) {
-        cout << t.getOccupation()<< endl;
+    estudantes[idx].setSchedule(newSchedule);
+    for (auto t : turmas){
+        if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma){
+            t.decreaseOccupation();
+            break;
+        }
     }
-    for (Turma t : newSchedule) {
-        cout << t.getcodigoUC() << endl;
-    }
-    if (removed) estudantes[i].setSchedule(newSchedule);
-    return removed;
+    return true;
 }
 
 bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
@@ -584,17 +581,19 @@ bool Gestor::pedidoInserção(int id, string codigoUC, string codigoTurma){
     }
     if (i == estudantes.size()) return false; // o estudante não existe
     return true;*/
-    Estudante target(id, "", {});
-    int i = binarySearchEstudantes(id);
-    if (i == -1){
+
+    int idx = binarySearchEstudantes(id);
+    if (idx == -1){
         return false; //estudante não existe.
     }
 
-    int j = 0;
-    while (j < turmas.size()) {
-        if (turmas[j].getcodigoTurma() == codigoTurma && turmas[j].getcodigoUC() == codigoUC) break;
-        j++;
+    for (auto t : turmas){
+        if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma){
+            t.decreaseOccupation();
+            break;
+        }
     }
+
     if (j == turmas.size()) return false;
 
     cout << turmas[j].getcodigoUC() << " " << turmas[j].getcodigoTurma() << " " << turmas[j].getOccupation() << endl; //* attending sobe 4???
@@ -624,7 +623,7 @@ bool Gestor::desfazerÚltimoPedido(){
 // Testing Functions for the extract
 void Gestor::outputAllTurmas() {
     for (Turma t : turmas){
-        cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << '\n';
+        cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << ' ' << t.getOccupation() << '\n';
     }
 }
 
@@ -647,10 +646,10 @@ void Gestor::outputAllEstudantes(int order) {
             cout << e.getName() << ", " << e.getID() << endl;
             for (Turma t: e.getSchedule()) {
                 cout << "\t" << t.getcodigoUC() << ", " << t.getcodigoTurma() << endl;
-                for (Aula a: t.getAulas()) {
+                /*for (Aula a: t.getAulas()) {
                     cout << "        " << numToWeekday[a.getDia()] << ", " << a.getHoraInicio() << ", "
                          << a.getDuracao() << ", " << a.getTipo() << endl;
-                }
+                }*/
             }
         }
     }
