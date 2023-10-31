@@ -8,6 +8,7 @@
 
 /**
  * Altera a número máximo de alunos permitido numa turma.
+ * Complexidade: O(1).
  * @param newCap - Novo limite de alunos por turma.
  */
 void Gestor::setCap(const int newCap){
@@ -16,8 +17,8 @@ void Gestor::setCap(const int newCap){
 
 /**
  * Extrai as turmas para um vetor ordenado.
- * @param fname - Nome do ficheiro que contém as turmas a extrair.
  * Complexidade: O(n), sendo n o número de linhas do ficheiro a ler.
+ * @param fname - Nome do ficheiro que contém as turmas a extrair.
  * @return Verdadeiro se o ficheiro existe.
  */
 bool Gestor::extractTurmas(string fname) {
@@ -35,14 +36,14 @@ bool Gestor::extractTurmas(string fname) {
         getline(fieldReader, classID, '\r');
         turmas.emplace_back(ucID, classID);
     }
-    //sortTurmas(); // Kind of optional...
+    sortTurmas();
     return true;
 }
 
 /**
  * Extrai as aulas para uma lista pertencente à turma correspondente.
- * @param fname - Nome do ficheiro que contém as aulas a extrair.
  * Complexidade: O(n * m), sendo n o número de linhas do ficheiro a ler e m o número de turmas.
+ * @param fname - Nome do ficheiro que contém as aulas a extrair.
  * @return Verdadeiro se o ficheiro existe.
  */
 bool Gestor::extractAulas(string fname) {
@@ -75,8 +76,8 @@ bool Gestor::extractAulas(string fname) {
 
 /**
  * Extrai os estudantes para um vetor ordenado por ordem numérica.
- * @param fname - Nome do ficheiro que contém os estudantes a extrair.
  * Complexidade: O (n * m), sendo n o número de linhas do ficheiro a ler e m o número de turmas.
+ * @param fname - Nome do ficheiro que contém os estudantes a extrair.
  * @return Verdadeiro se o ficheiro existe.
  */
 bool Gestor::extractEstudantes(string fname) {
@@ -135,8 +136,8 @@ bool Gestor::extractEstudantes(string fname) {
 
 /**
  * Imprime o horário de um estudante.
- * @param id - Número do estudante cujo horário deverá ser impresso.
  * Complexidade: O(log n), sendo n o número de estudantes.
+ * @param id - Número do estudante cujo horário deverá ser impresso.
  * @return Verdadeiro se o estudante existe.
  */
 bool Gestor::outputHorárioEstudante(int id){
@@ -157,8 +158,8 @@ bool Gestor::outputHorárioEstudante(int id){
 
 /**
  * Imprime o horário de uma turma.
- * @param codigoTurma - Código da turma cujo horário deverá ser impresso.
  * Complexidade: O(n), sendo n o número de turmas.
+ * @param codigoTurma - Código da turma cujo horário deverá ser impresso.
  * @return Verdadeiro se a turma existe.
  */
 bool Gestor::outputHorárioTurma(string codigoTurma){
@@ -180,8 +181,8 @@ bool Gestor::outputHorárioTurma(string codigoTurma){
 
 /**
  * Imprime o horário de uma UC.
- * @param codigoUC - Código da UC cujo horário deverá ser impresso.
  * Complexidade: 0(n), sendo n o número de turmas.
+ * @param codigoUC - Código da UC cujo horário deverá ser impresso.
  * @return Verdadeiro se a UC existe.
  */
 bool Gestor::outputHorárioUC(string codigoUC){
@@ -203,8 +204,8 @@ bool Gestor::outputHorárioUC(string codigoUC){
 
 /**
  * Formata a impressão dos horários.
- * @param horario - Set de aulas que constituem o horário.
  * Complexidade: O(n), sendo n o número de aulas.
+ * @param horario - Set de aulas que constituem o horário.
  */
 void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
     int currentWeekday = -1;
@@ -227,9 +228,9 @@ void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
 
 /**
  * Imprime a lista de estudantes pertencentes a uma turma, em determinada ordem.
+ * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param codigoTurma - Código da turma à qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @return Verdadeiro se a turma existe.
  */
 bool Gestor::outputListaEstudanteTurma(string codigoTurma, int order){
@@ -288,9 +289,9 @@ bool Gestor::outputListaEstudanteTurma(string codigoTurma, int order){
 
 /**
  * Imprime a lista de estudantes pertencentes a uma UC, em determinada ordem.
+ * Complexidade: O(n * m * log n), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param codigoUC - Código da UC à qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @return Verdadeiro se a UC existe.
  */
 bool Gestor::outputListaEstudanteUC(string codigoUC, int order){
@@ -349,9 +350,9 @@ bool Gestor::outputListaEstudanteUC(string codigoUC, int order){
 
 /**
  * Imprime a lista de estudantes pertencentes a um ano curricular, em determinada ordem.
+ * Complexidade: O(n * m * log n), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param ano - Ano curricular a qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  */
 void Gestor::outputListaEstudanteAno(int ano, int order){
     if (order == 1) {
@@ -406,8 +407,8 @@ void Gestor::outputListaEstudanteAno(int ano, int order){
 
 /**
  * Imprime a lista de turmas pertencentes a uma UC.
- * @param codigoUC - Código da UC à qual as turmas pertencem.
  * Complexidade: O(n), sendo n o número de turmas.
+ * @param codigoUC - Código da UC à qual as turmas pertencem.
  * @return Verdadeiro se a UC existe.
  */
 bool Gestor::outputListaTurmas(string codigoUC){
@@ -422,8 +423,8 @@ bool Gestor::outputListaTurmas(string codigoUC){
 
 /**
  * Imprime a lista de UCs pertencentes a um ano curricular.
- * @param ano - Ano curricular a qual as UCs pertencem.
  * Complexidade: O(n), sendo n o número de turmas.
+ * @param ano - Ano curricular a qual as UCs pertencem.
  */
 void Gestor::outputListaUC(int ano){
 
@@ -435,9 +436,9 @@ void Gestor::outputListaUC(int ano){
 
 /**
  * Imprime a lista de estudantes pertencentes a n UCs.
+ * Complexidade: O(n log n), sendo n o número de estudantes.
  * @param n - Número de UCs
  * @param order - Ordem em qual deverão ser impressos os estudantes.
- * Complexidade: O(n), sendo n o número de estudantes.
  */
 void Gestor::outputListaEstudanteNUC(int n, int order) {
     if (order == 1) {
@@ -479,9 +480,9 @@ void Gestor::outputListaEstudanteNUC(int n, int order) {
 
 /**
  * Imprime a lista de estudantes pertencentes a mais do que n UCs.
+ * Complexidade: O(n log n), sendo n o número de estudantes.
  * @param n - Número de UCs.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
- * Complexidade: O(n), sendo n o número de estudantes.
  */
 void Gestor::outputListaEstudanteMaisNUC(int n, int order){
     if (order == 1) {
@@ -522,8 +523,8 @@ void Gestor::outputListaEstudanteMaisNUC(int n, int order){
 
 /**
  * Imprime a ocupação de uma turma.
- * @param codigoTurma - Código da turma cuja ocupação deverá ser impressa.
  * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * @param codigoTurma - Código da turma cuja ocupação deverá ser impressa.
  * @return Verdadeiro se a turma existe.
  */
 bool Gestor::outputOcupaçãoTurma(string codigoTurma){
@@ -549,8 +550,8 @@ bool Gestor::outputOcupaçãoTurma(string codigoTurma){
 
 /**
  * Imprime a ocupação de uma UC.
- * @param codigoUC - Código da UC cuja ocupação deverá ser impressa.
  * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * @param codigoUC - Código da UC cuja ocupação deverá ser impressa.
  * @return Verdadeiro se a UC existe.
  */
 bool Gestor::outputOcupaçãoUC(string codigoUC){
@@ -576,8 +577,8 @@ bool Gestor::outputOcupaçãoUC(string codigoUC){
 
 /**
  * Imprime a ocupação de um ano curricular.
- * @param ano - Ano curricular cuja ocupação deverá ser impressa.
  * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * @param ano - Ano curricular cuja ocupação deverá ser impressa.
  */
 void Gestor::outputOcupaçãoAno(int ano) {
     map<string, int> occupations;
@@ -600,8 +601,8 @@ void Gestor::outputOcupaçãoAno(int ano) {
 
 /**
  * Verifica se um estudante atingiu o limite de 7 UCs.
- * @param schedule - Horário do estudante.
  * Complexidade: O(1).
+ * @param schedule - Horário do estudante.
  * @return Verdadeiro se o estudante não atingiu o limite.
  */
 bool Gestor::assessUCLimit(list<Turma> schedule) {
@@ -614,9 +615,9 @@ bool Gestor::assessUCLimit(list<Turma> schedule) {
 
 /**
  * Verifica se entrar numa turma irá gerar um conflito de aulas no horário de um estudante.
+ * Complexidade: O(n * m * p), sendo n o número de aulas da nova turma, m o número de turmas do estudante e p o número de aulas de cada turma.
  * @param schedule - Horário do estudante.
  * @param nt - Turma na qual o estudante quer entrar.
- * Complexidade: O(n * m * p), sendo n o número de aulas da nova turma, m o número de turmas do estudante e p o número de aulas de cada turma.
  * @return Verdadeiro se não existirem conflitos.
  */
 bool Gestor::assessScheduleConflict(list<Turma> schedule, Turma nt) {
@@ -639,9 +640,9 @@ bool Gestor::assessScheduleConflict(list<Turma> schedule, Turma nt) {
 
 /**
  * Verifica se entrar numa turma fará com que um estudante esteja em duas turmas da mesma UC.
+ * Complexidade: O(n), sendo n o número de turmas do estudante.
  * @param schedule - Horário do estudante.
  * @param nt - Turma na qual o estudante quer entrar.
- * Complexidade: O(n), sendo n o número de turmas do estudante.
  * @return Verdadeiro se não existirem conflitos.
  */
 bool Gestor::assessUCTurmaSingularity(list<Turma> schedule, Turma nt) {
@@ -655,8 +656,8 @@ bool Gestor::assessUCTurmaSingularity(list<Turma> schedule, Turma nt) {
 
 /**
  * Verifica se entrar numa turma fará com que a turma exceda a capacidade máxima.
- * @param t - Turma na qual o estudante quer entrar.
  * Complexidade: O(1).
+ * @param t - Turma na qual o estudante quer entrar.
  * @return Verdadeiro se adicionar o estudante não exceder a capacidade máxima.
  */
 bool Gestor::assessTurmaCap(Turma t) {
@@ -665,10 +666,10 @@ bool Gestor::assessTurmaCap(Turma t) {
 
 /**
  * Verifica se mudar um estudante de turma irá perturbar o equilíbrio da ocupação das turmas.
+ * Complexidade: O(n), sendo n o número de turmas.
  * @param idUC - Código da UC cujo equilíbrio será verificado.
  * @param idTurma - Turma na qual o estudante quer entrar.
  * @param idTurmaAnterior - Turma da qual o estudante irá sair.
- * Complexidade: O(n), sendo n o número de turmas.
  * @return Verdadeiro se o equilíbrio for mantido.
  */
 bool Gestor::assessBalance(string idUC, string idTurma, string idTurmaAnterior = "") {
@@ -705,10 +706,10 @@ bool Gestor::assessBalance(string idUC, string idTurma, string idTurmaAnterior =
 
 /**
  * Cria um novo pedido de remoção de um estudante de uma turma.
+ * Complexidade: O(1)
  * @param id - Número de identificação do estudante.
  * @param codigoUC - Código da UC da qual o estudante quer ser removido.
  * @param codigoTurma - Código da turma da qual o estudante quer ser removido.
- * Complexidade: O(1)
  */
 void Gestor::novoPedidoRemoção(int id, string codigoUC, string codigoTurma){
     pedidos.push({id, codigoUC, codigoTurma, "R"});
@@ -716,10 +717,10 @@ void Gestor::novoPedidoRemoção(int id, string codigoUC, string codigoTurma){
 
 /**
  * Cria um novo pedido de inserção de um estudante de uma turma.
+ * Complexidade: O(1)
  * @param id - Número de identificação do estudante.
  * @param codigoUC - Código da UC na qual o estudante quer ser inserido.
  * @param codigoTurma - Código da turma na qual o estudante quer ser inserido.
- * Complexidade: O(1)
  */
 void Gestor::novoPedidoInserção(int id, string codigoUC, string codigoTurma){
     pedidos.push({id, codigoUC, codigoTurma, "I"});
@@ -727,12 +728,12 @@ void Gestor::novoPedidoInserção(int id, string codigoUC, string codigoTurma){
 
 /**
  * Cria um novo pedido de troca de um estudante entre turmas.
+ * Complexidade: O(1).
  * @param id - Número de identificação do estudante.
  * @param codigoUCAtual - Código da UC à qual o estudante pertence.
  * @param codigoTurmaAtual - Código da turma à qual o estudante pertence.
  * @param codigoUCNova - Código da UC na qual o estudante quer ser inserido.
  * @param codigoTurmaNova - Código da turma na qual o estudante quer ser inserido.
- * Complexidade: O(1).
  */
 void Gestor::novoPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova){
     pedidos.push({id, codigoUCAtual, codigoTurmaAtual, codigoUCNova, codigoTurmaNova, "T"});
@@ -766,7 +767,7 @@ void Gestor::procPedido(){
 
 /**
  * Gere o processamento de todos os pedidos em fila de espera de uma só vez.
- * Complexidade: O(n), sendo n o número de pedidos.
+ * Complexidade: O(n * m), sendo n o número de pedidos e m o número de turmas..
  */
 void Gestor::procTodosPedidos(){
     while (!pedidos.empty()){
@@ -794,10 +795,10 @@ bool Gestor::faltamProcPedidos(){
 
 /**
  * Processa um pedido de remoção.
+ * Complexidade: O(n), sendo n o número de turmas.
  * @param id - Número do estudante a ser removido.
  * @param codigoUC - Código da UC da qual o estudante quer ser removido.
  * @param codigoTurma - Código da turma da qual o estudante quer ser removido.
- * Complexidade: O(n), sendo n o número de turmas.
  * @return Verdadeiro se o pedido foi processado com sucesso.
  */
 bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
@@ -844,10 +845,10 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
 
 /**
  * Processa um pedido de inserção.
+ * Complexidade: O(n), sendo n o número de turmas.
  * @param id - Número do estudante a ser inserido.
  * @param codigoUC - Código da UC na qual o estudante quer ser inserido.
  * @param codigoTurma - Código da turma na qual o estudante quer ser inserido.
- * Complexidade: O(n), sendo n o número de turmas.
  * @return Verdadeiro se o pedido foi processado com sucesso.
  */
 bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
@@ -878,12 +879,12 @@ bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
 
 /**
  * Processa um pedido de troca.
+ * Complexidade: O(n), sendo n o número de turmas.
  * @param id - Número do estudante a ser inserido.
  * @param codigoUCAtual - Código da UC na qual o estudante se encontra.
  * @param codigoTurmaAtual - Código da turma na qual o estudante se encontra.
  * @param codigoUCNova - Código da UC na qual o estudante quer ser inserido.
  * @param codigoTurmaNova - Código da turma na qual o estudante quer ser inserido.
- * Complexidade: O(n), sendo n o número de turmas.
  * @return Verdadeiro se o pedido foi processado com sucesso.
  */
 bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtual, string codigoUCNova, string codigoTurmaNova) {
@@ -978,8 +979,8 @@ void Gestor::outputAllAulas() {
 
 /**
  * Imprime a lista total de estudantes em determinada ordem.
+ * Complexidade: O(n * m * log n), sendo n o número de estudantes e m o número de turmas de cada estudante.
  * @param order - Ordem na qual os estudantes deverão ser impressos.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas de cada estudante.
  */
 void Gestor::outputAllEstudantes(int order) {
     if (order == 1) {
@@ -1026,8 +1027,8 @@ void Gestor::outputAllEstudantes(int order) {
 
 /**
  * Gere o armazenamento das alteracões feitas.
- * @param fname - Nome do ficheiro onde serão guardadas os horários dos estudantes.
  * Complexidade: O(n), sendo n o número de linhas a ser escritas no ficheiro.
+ * @param fname - Nome do ficheiro onde serão guardadas os horários dos estudantes.
  */
 void Gestor::saveChanges(string fname) {
     writeStudentClasses(fname);
@@ -1042,8 +1043,8 @@ void Gestor::saveChanges(string fname) {
 
 /**
  * Guarda em ficheiro os pedidos que foram realizados com sucesso.
- * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  * Complexidade: O(n), sendo n o número de pedidos.
+ * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  */
 void Gestor::writeDoneRequests(string fname){
     vector<Pedido> toWrite;
@@ -1071,8 +1072,8 @@ void Gestor::writeDoneRequests(string fname){
 
 /**
  * Guarda em ficheiro os pedidos inválidos.
- * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  * Complexidade: O(n), sendo n o número de pedidos.
+ * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  */
 void Gestor::writeInvalidRequests(string fname){
     ofstream fileWriter(fname);
@@ -1095,8 +1096,8 @@ void Gestor::writeInvalidRequests(string fname){
 
 /**
  * Guarda em ficheiro as alterações realizadas aos horários dos estudantes.
- * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  * Complexidade: O(n), sendo n o número de linhas a ser escritas no ficheiro.
+ * @param fname - Nome do ficheiro onde serão guardadas as alterações.
  */
 void Gestor::writeStudentClasses(string fname) {
     ofstream fileWriter(fname);
@@ -1110,7 +1111,8 @@ void Gestor::writeStudentClasses(string fname) {
 }
 
 /**
- * what fucks
+ * Organiza as turmas pela função compareTurmas.
+ * Complexidade: O(n log n), sendo n o número de turmas.
  */
 void Gestor::sortTurmas() {
     sort(turmas.begin(), turmas.end(), compareTurmas);
@@ -1148,8 +1150,8 @@ bool compareEstudantes(const Estudante &e1, const Estudante &e2){
 
 /**
  * Implementa Binary Search para encontrar um estudante.
- * @param id - Número de identificação do estudante.
  * Complexidade: O(log n), sendo n o número de estudantes.
+ * @param id - Número de identificação do estudante.
  * @return Índice do estudante no vetor de estudantes.
  */
 int Gestor::binarySearchEstudantes(int id) {

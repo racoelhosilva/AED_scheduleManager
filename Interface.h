@@ -3,6 +3,9 @@
 
 #include "Gestor.h"
 
+/**
+ * Classe que gere a interface da aplicação com o gestor de horários.
+ */
 class Interface {
 private:
     Gestor gestor;
@@ -11,42 +14,26 @@ private:
     void footer();
     void inputWait();
 public:
-    // Reading Files
+
     bool startMenu();
 
-    // Operations
     void mainMenu();
 
-    // Schedules
     void scheduleMenu();
 
-    // Listings
     void listingMenu();
     void listingStudentsMenu();
     void listingStudentsUCMenu();
 
-    //Order
     int orderMenu();
 
-    /* Orders:
-     * 1 = Alfabética
-     * 2 = Alfabética Inversa
-     * 3 = Numérica
-     * 4 = Numérica Inversa
-     */
-
-
-    // Occupations
     void occupationMenu();
 
-    // Requests
     void requestMenu();
     void processingMenu();
 
-    // Total Listing
     void totalListingMenu();
 
-    // Saving and Exit
     void closeMenu();
 };
 

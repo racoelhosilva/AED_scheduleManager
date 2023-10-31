@@ -13,31 +13,28 @@
 #include <sstream>
 #include <iostream>
 
-// Comparison operators
+/**
+ * Operador de comparação de organizar estudantes alfabeticamente de forma ascendente.
+ */
 struct EstudanteAlphaAscending {
     bool operator()(const Estudante& a, const Estudante& b) const {
         return a.getName() < b.getName();
     }
 };
 
+/**
+ * Operador de comparação de organizar estudantes alfabeticamente de forma descendente.
+ */
 struct EstudanteAlphaDescending {
     bool operator()(const Estudante& a, const Estudante& b) const {
         return a.getName() > b.getName();
     }
 };
 
-struct EstudanteNumAscending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getID() < b.getID();
-    }
-};
 
-struct EstudanteNumDescending {
-    bool operator()(const Estudante& a, const Estudante& b) const {
-        return a.getID() > b.getID();
-    }
-};
-
+/**
+ * Operador de comparação para organizar aulas de forma cronológica.
+ */
 struct compareHorario{
     bool operator()(const pair<Aula,Turma> &a1, const pair<Aula,Turma> &a2) const {
         bool compareDia = a1.first.getDia() < a2.first.getDia();
@@ -46,6 +43,9 @@ struct compareHorario{
     }
 };
 
+/**
+ * Classe que define o gestor de horários.
+ */
 class Gestor {
 private:
     vector<Turma> turmas;
@@ -79,20 +79,11 @@ public:
     void outputListaEstudanteNUC(int n, int order);
     void outputListaEstudanteMaisNUC(int n, int order);
 
-    /* Orders:
-     * 1 = Alfabética
-     * 2 = Alfabética Inversa
-     * 3 = Numérica
-     * 4 = Numérica Inversa
-     */
-
-
     bool outputOcupaçãoTurma(string codigoTurma);
     bool outputOcupaçãoUC(string codigoUC);
     void outputOcupaçãoAno(int ano);
 
     bool assessUCLimit(list<Turma> schedule);
-    //bool assessTurmaVacancy(Turma t);
     bool assessScheduleConflict(list<Turma> schedule, Turma nt);
     bool assessUCTurmaSingularity(list<Turma> schedule, Turma nt);
     bool assessTurmaCap(Turma t);
@@ -118,11 +109,9 @@ public:
     void writeInvalidRequests(string fname);
 
     void sortTurmas();
-    int binarySearchTurmas(int id);
     void sortEstudantesByNumber();
     int binarySearchEstudantes(int id);
 
-    // Testing Functions for the extracts and output
     void outputAllTurmas();
     void outputAllAulas();
     void outputAllEstudantes(int order);

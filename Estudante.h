@@ -7,13 +7,27 @@
 
 using namespace std;
 
+/**
+ * Classe que define um estudante.
+ */
 class Estudante {
     private:
         int studentID;
         string studentName;
         list<Turma> schedule;
     public:
+
+        /**
+        * Construtor sem parâmetros de um estudante.
+        */
         Estudante();
+
+        /**
+         * Construtor parametrizado de um estudante.
+         * @param id - Número de identificação de um estudante.
+         * @param name - Nome do estudante
+         * @param classes - Turmas a que o estudante pertence.
+         */
         Estudante(int id, string name, list<Turma> classes = {});
 
         int const getID() const;

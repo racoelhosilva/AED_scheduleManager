@@ -3,6 +3,9 @@
 #include "Aula.h"
 #include <list>
 
+/**
+ * Classe que define uma turma.
+ */
 class Turma {
 private:
     string codigoUC;
@@ -11,8 +14,16 @@ private:
     int occupation = 0;
 public:
 
-
+    /**
+     * Construtor sem parâmetros de uma turma.
+     */
     Turma();
+
+    /**
+     * Construtor parametrizado de uma turma.
+     * @param codigoUC - Código da UC.
+     * @param codigoTurma - Código da turma.
+     */
     Turma(string codigoUC, string codigoTurma);
     string getcodigoUC() const;
     string getcodigoTurma() const;
