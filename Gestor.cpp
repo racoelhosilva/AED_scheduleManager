@@ -781,7 +781,7 @@ void Gestor::procTodosPedidos(){
  * @return Verdadeiro se não foram feitas mudanças.
  */
 bool Gestor::existemMudanças() {
-    return pedidosRealizados.empty();
+    return !pedidosRealizados.empty() || !pedidos.empty();
 }
 
 /**
@@ -790,7 +790,7 @@ bool Gestor::existemMudanças() {
  * @return Verdadeiro se não existirem pedidos por processar.
  */
 bool Gestor::faltamProcPedidos(){
-    return pedidos.empty();
+    return !pedidos.empty();
 }
 
 /**
@@ -945,10 +945,22 @@ bool Gestor::desfazerÚltimoPedido(){
     bool result;
     if (pedidosRealizados.top().getTipo() == "R") {
         result = procPedidoInserção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+        if (!result) {
+            Pedido p(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma(), "UR");
+            pedidosInválidos.push(p);
+        }
     } else if (pedidosRealizados.top().getTipo() == "I") {
         result = procPedidoRemoção(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+        if (!result) {
+            Pedido p(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma(), "UI");
+            pedidosInválidos.push(p);
+        }
     } else if (pedidosRealizados.top().getTipo() == "T") {
         result = procPedidoTroca(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUCNova(), pedidosRealizados.top().getCodigoTurmaNova(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma());
+        if (!result) {
+            Pedido p(pedidosRealizados.top().getId(), pedidosRealizados.top().getCodigoUCNova(), pedidosRealizados.top().getCodigoTurmaNova(), pedidosRealizados.top().getCodigoUC(), pedidosRealizados.top().getCodigoTurma(), "UT");
+            pedidosInválidos.push(p);
+        }
     }
     if (result) pedidosRealizados.pop();
     return result;
