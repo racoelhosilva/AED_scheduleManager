@@ -11,7 +11,7 @@
  * Complexidade: O(1).
  * @param newCap - Novo limite de alunos por turma.
  */
-void Gestor::setCap(const int newCap){
+void Gestor::setCap(int newCap){
     this->cap = newCap;
 }
 
@@ -230,6 +230,7 @@ void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
  * Imprime a lista de estudantes pertencentes a uma turma, em determinada ordem.
  * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param codigoTurma - Código da turma à qual os estudantes pertencem.
+ * @param codigoUC - Código da UC à qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
  * @return Verdadeiro se a turma existe.
  */
@@ -339,6 +340,69 @@ bool Gestor::outputListaEstudanteUC(string codigoUC, int order){
         for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
             for (Turma t : e->getSchedule()) {
                 if (t.getcodigoUC() == codigoUC) {
+                    cout << e->getID() << " " << e->getName() << "\n";
+                    break;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+/**
+ * Imprime a lista de estudantes pertencentes a uma turma, em determinada ordem.
+ * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * @param codigoTurma - Código da turma à qual os estudantes pertencem.
+ * @param order - Ordem em qual deverão ser impressos os estudantes.
+ * @return Verdadeiro se a turma existe.
+ */
+bool Gestor::outputListaEstudanteTurmaUC(string codigoTurma, string codigoUC, int order){
+    if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
+        return false;
+    if(find_if(turmas.begin(), turmas.end(), [codigoUC](const Turma& t) {return t.getcodigoUC() == codigoUC;}) == turmas.end())
+        return false;
+    if (order == 1) {
+        set<Estudante, EstudanteAlphaAscending> lista;
+        for (Estudante e: estudantes) {
+            for (Turma t: e.getSchedule()) {
+                if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma) {
+                    lista.insert(e);
+                    break;
+                }
+            }
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 2) {
+        set<Estudante, EstudanteAlphaDescending> lista;
+        for (Estudante e: estudantes) {
+            for (Turma t: e.getSchedule()) {
+                if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma) {
+                    lista.insert(e);
+                    break;
+                }
+            }
+        }
+        for (Estudante e : lista) {
+            cout << e.getID() << " " << e.getName() << "\n";
+        }
+    }
+    if (order == 3) {
+        for (Estudante e: estudantes) {
+            for (Turma t: e.getSchedule()) {
+                if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma) {
+                    cout << e.getID() << " " << e.getName() << "\n";
+                    break;
+                }
+            }
+        }
+    }
+    if (order == 4) {
+        for (auto e = estudantes.rbegin(); e != estudantes.rend(); e++) {
+            for (Turma t : e->getSchedule()) {
+                if (t.getcodigoUC() == codigoUC && t.getcodigoTurma() == codigoTurma) {
                     cout << e->getID() << " " << e->getName() << "\n";
                     break;
                 }

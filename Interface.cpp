@@ -281,13 +281,13 @@ void Interface::listingMenu() {
 }
 void Interface::listingStudentsMenu() {
     cout << "Que tipo de listagem pretende?\n";
-    cout << "\t1. Estudante numa Turma\t\t2. Estudante numa Unidade Curricular\t\t3. Estudante num Ano\t\t4. Voltar\n";
+    cout << "\t1. Estudante numa Turma\t\t2. Estudante numa Unidade Curricular\t\t3. Estudante numa Turma e UC\t\t4. Estudante num Ano\t\t5. Voltar\n";
     cout << "Opção: ";
     string actionOption;
     cin >> actionOption;
     cin.clear();
     cin.ignore(INT_MAX, '\n');
-    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4"){
+    while(actionOption != "1" && actionOption != "2" && actionOption != "3" && actionOption != "4" && actionOption != "5"){
         cout << "Input inválido. Opção: ";
         cin >> actionOption;
         cin.clear();
@@ -336,6 +336,37 @@ void Interface::listingStudentsMenu() {
             break;
         }
         case 3:{
+            string codigoTurma;
+            cout << "Código da Turma (ex. 1LEIC00): ";
+            cin >> codigoTurma;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while (codigoTurma.length() != 7 || (codigoTurma[0] < '1' || codigoTurma[0] > '3')) {
+                cout << "Input inválido. Código da Turma: ";
+                cin >> codigoTurma;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            string codigoUC;
+            cout << "Código da Unidade Curricular (ex. L.EIC000): ";
+            cin >> codigoUC;
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001") {
+                cout << "Input inválido. Código da Unidade Curricular: ";
+                cin >> codigoUC;
+                cin.clear();
+                cin.ignore(INT_MAX, '\n');
+            }
+            int order = this->orderMenu();
+            if (!gestor.outputListaEstudanteTurmaUC(codigoTurma, codigoUC, order)) {
+                cout << "Turma ou Unidade Curricular não encontrada!";
+                this->listingStudentsMenu();
+            }
+            this->inputWait();
+            break;
+        }
+        case 4:{
             int ano;
             cout << "Ano (ex. 1): ";
             cin >> ano;

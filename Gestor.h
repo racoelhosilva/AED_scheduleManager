@@ -55,12 +55,12 @@ private:
     queue<Pedido> pedidosInválidos;
     int cap = 30;
 
-    map<int,string> numToWeekday = {{0, "Monday"},{1, "Tuesday"},{2, "Wednesday"},{3, "Thursday"},{4, "Friday"}};
+    string numToWeekday[5] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
     map<string,int> weekdayToNum = {{"Monday", 0},{"Tuesday", 1},{"Wednesday", 2},{"Thursday", 3},{"Friday", 4}};
 
 public:
 
-    void setCap(const int newCap);
+    void setCap(int newCap);
 
     bool extractTurmas(string fname);
     bool extractAulas(string fname);
@@ -73,6 +73,7 @@ public:
 
     bool outputListaEstudanteTurma(string codigoTurma, int order);
     bool outputListaEstudanteUC(string codigoUC, int order);
+    bool outputListaEstudanteTurmaUC(string codigoTurma, string codigoUC, int order);
     void outputListaEstudanteAno(int ano, int order);
     bool outputListaTurmas(string codigoUC);
     void outputListaUC(int ano);
