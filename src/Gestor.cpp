@@ -1036,7 +1036,7 @@ bool Gestor::desfazerÚltimoPedido(){
  */
 void Gestor::outputAllTurmas() {
     for (Turma t : turmas){
-        cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << ' ' << t.getOccupation() << '\n';
+        cout << setw(8) << t.getcodigoUC() << '\t' << t.getcodigoTurma() << '\t' << t.getOccupation() << '\n';
     }
 }
 
@@ -1046,10 +1046,10 @@ void Gestor::outputAllTurmas() {
  */
 void Gestor::outputAllAulas() {
     for (Turma t : turmas){
-        cout << t.getcodigoUC() << ' ' << t.getcodigoTurma() << '\t';
+        cout << setw(8) << t.getcodigoUC() << '\t' << t.getcodigoTurma() << '\t';
         for (Aula a : t.getAulas())
-            cout << '\t' << numToWeekday[a.getDia()] << ' ' << a.getDuracao() << "     \t|\t";
-        cout << '\n';
+            cout << "\t|\t" << setw(10) << numToWeekday[a.getDia()] << ' ' << setw(3) << a.getDuracao();
+        cout << "  |\n";
     }
 }
 
