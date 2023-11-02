@@ -15,7 +15,7 @@ private:
     string tipo;
 
 public:
-    
+
     /**
      * Construtor parametrizado de uma aula.
      * @param dia - Dia da aula.

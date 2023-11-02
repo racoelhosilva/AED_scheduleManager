@@ -3,8 +3,6 @@
 #include <set>
 #include <map>
 #include <iomanip>
-#include <cmath>
-#include <algorithm>
 
 /**
  * Altera a número máximo de alunos permitido numa turma.
@@ -228,7 +226,7 @@ void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
 
 /**
  * Imprime a lista de estudantes pertencentes a uma turma, em determinada ordem.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * Complexidade: O(n * m * log n), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param codigoTurma - Código da turma à qual os estudantes pertencem.
  * @param codigoUC - Código da UC à qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
@@ -351,15 +349,13 @@ bool Gestor::outputListaEstudanteUC(string codigoUC, int order){
 
 /**
  * Imprime a lista de estudantes pertencentes a uma turma, em determinada ordem.
- * Complexidade: O(n * m), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
+ * Complexidade: O(n * m * log n), sendo n o número de estudantes e m o número de turmas a que cada estudante pertence.
  * @param codigoTurma - Código da turma à qual os estudantes pertencem.
  * @param order - Ordem em qual deverão ser impressos os estudantes.
  * @return Verdadeiro se a turma existe.
  */
 bool Gestor::outputListaEstudanteTurmaUC(string codigoTurma, string codigoUC, int order){
-    if(find_if(turmas.begin(), turmas.end(), [codigoTurma](const Turma& t) {return t.getcodigoTurma() == codigoTurma;}) == turmas.end())
-        return false;
-    if(find_if(turmas.begin(), turmas.end(), [codigoUC](const Turma& t) {return t.getcodigoUC() == codigoUC;}) == turmas.end())
+    if(find_if(turmas.begin(), turmas.end(), [codigoTurma, codigoUC](const Turma& t) {return t.getcodigoTurma() == codigoTurma || t.getcodigoUC() == codigoUC;}) == turmas.end())
         return false;
     if (order == 1) {
         set<Estudante, EstudanteAlphaAscending> lista;
@@ -673,10 +669,6 @@ bool Gestor::assessUCLimit(list<Turma> schedule) {
     return schedule.size() + 1 <= 7;
 }
 
-/*bool Gestor::assessTurmaVacancy(Turma t) {
-    return t.attending <= cap;
-}*/
-
 /**
  * Verifica se entrar numa turma irá gerar um conflito de aulas no horário de um estudante.
  * Complexidade: O(n * m * p), sendo n o número de aulas da nova turma, m o número de turmas do estudante e p o número de aulas de cada turma.
@@ -887,7 +879,6 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
         return false;
     }
 
-    //temporário - só para assessBalance()
     int tIdx = -1;
     for (int i = 0; i < turmas.size(); i++){
         if (turmas[i].getcodigoUC() == codigoUC && turmas[i].getcodigoTurma() == codigoTurma){
@@ -919,7 +910,7 @@ bool Gestor::procPedidoInserção(int id, string codigoUC, string codigoTurma){
     int eIdx = binarySearchEstudantes(id);
     if (eIdx == -1){
         cout << "ERRO: Aluno não existe.\n";
-        return false; //estudante não existe.
+        return false;
     }
     int tIdx = -1;
     for (int i = 0; i < turmas.size(); i++){
@@ -957,7 +948,7 @@ bool Gestor::procPedidoTroca(int id, string codigoUCAtual, string codigoTurmaAtu
     if (eIdx == -1){
 
         cout << "ERRO: Aluno não existe.\n";
-        return false; //estudante não existe.
+        return false;
     }
     list<Turma> newSchedule = {};
     bool turmaFound = false;
