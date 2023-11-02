@@ -834,7 +834,7 @@ void Gestor::procTodosPedidos(){
 /**
  * Verifica se mudanças foram feitas aos horários dos estudantes.
  * Complexidade: O(1).
- * @return Verdadeiro se não foram feitas mudanças.
+ * @return Verdadeiro se foram feitas mudanças.
  */
 bool Gestor::existemMudanças() {
     return !pedidosRealizados.empty() || !pedidos.empty();
@@ -843,7 +843,7 @@ bool Gestor::existemMudanças() {
 /**
  * Verifica se ainda existem pedidos por processar.
  * Complexidade: O(1).
- * @return Verdadeiro se não existirem pedidos por processar.
+ * @return Verdadeiro se existirem pedidos por processar.
  */
 bool Gestor::faltamProcPedidos(){
     return !pedidos.empty();
