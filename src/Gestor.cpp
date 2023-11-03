@@ -221,7 +221,7 @@ void Gestor::printHorarios(set<pair<Aula,Turma>, compareHorario> horario){
         cout << '\t' <<
              setw(2) << setfill('0') << h1 << ':' << setw(2) << setfill('0') << m1 << " - " <<
              setw(2) << setfill('0') << h2 << ':' << setw(2) << setfill('0') << m2 << '\t' <<
-             x.second.getcodigoUC() << "  (" << x.first.getTipo() << ")\t" << x.second.getcodigoTurma() << '\n';
+             setfill(' ') << setw(8) << x.second.getcodigoUC() << "  (" << x.first.getTipo() << ")\t" << x.second.getcodigoTurma() << '\n';
     }
 }
 
