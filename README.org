@@ -1,0 +1,17 @@
+#+TITLE: Schedule Management System
+
+#+BEGIN_QUOTE
+Project written in C++ to manage a dataset of Classes, Studentes and Schedules
+
+Create in October 2023 for AED (Algoritmos e Estruturas de Dados)
+#+END_QUOTE
+
+*** Developers
+
+|-----------------------------------+-----------+---------------------------------------------------|
+| Name                              | UP Number | Github                                            |
+|-----------------------------------+-----------+---------------------------------------------------|
+| Rafael Teixeira de Magalhães      | 202206499 | [oxi-moron][https://github.com/oxi-moron]         |
+| Ricardo de Freitas Oliveira       | 202205353 | [odracir04][https://github.com/odracir04]         |
+| Rodrigo Albergaria Coelho e Silva | 202205188 | [racoelhosilva][https://github.com/racoelhosilva] |
+|-----------------------------------+-----------+---------------------------------------------------|
