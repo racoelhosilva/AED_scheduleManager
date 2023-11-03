@@ -154,7 +154,7 @@ void Interface::scheduleMenu() {
                 cin.ignore(INT_MAX, '\n');
             }
             if (!gestor.outputHorárioEstudante(id)){
-                cout << "Estudante não encontrado!";
+                cout << "Estudante não encontrado!\n";
                 this->scheduleMenu();
             }
             else {
@@ -175,7 +175,7 @@ void Interface::scheduleMenu() {
                 cin.ignore(INT_MAX, '\n');
             }
             if (!gestor.outputHorárioTurma(codigoTurma)){
-                cout << "Turma não encontrada!";
+                cout << "Turma não encontrada!\n";
                 this->scheduleMenu();
             }
             this->inputWait();
@@ -194,7 +194,7 @@ void Interface::scheduleMenu() {
                 cin.ignore(INT_MAX, '\n');
             }
             if (!gestor.outputHorárioUC(codigoUC)){
-                cout << "Unidade Curricular não encontrada!";
+                cout << "Unidade Curricular não encontrada!\n";
                 this->scheduleMenu();
             }
             this->inputWait();
@@ -244,7 +244,7 @@ void Interface::listingMenu() {
             }
 
             if (!gestor.outputListaTurmas(codigoUC)){
-                cout << "Unidade Curricular não encontrada!";
+                cout << "Unidade Curricular não encontrada!\n";
                 this->listingMenu();
             }
             else {
@@ -309,7 +309,7 @@ void Interface::listingStudentsMenu() {
             }
             int order = this->orderMenu();
             if (!gestor.outputListaEstudanteTurma(codigoTurma, order)) {
-                cout << "Turma não encontrada!";
+                cout << "Turma não encontrada!\n";
                 this->listingStudentsMenu();
             }
             this->inputWait();
@@ -329,7 +329,7 @@ void Interface::listingStudentsMenu() {
             }
             int order = this->orderMenu();
             if (!gestor.outputListaEstudanteUC(codigoUC, order)) {
-                cout << "Unidade Curricular não encontrada!";
+                cout << "Unidade Curricular não encontrada!\n";
                 this->listingStudentsMenu();
             }
             this->inputWait();
@@ -360,7 +360,7 @@ void Interface::listingStudentsMenu() {
             }
             int order = this->orderMenu();
             if (!gestor.outputListaEstudanteTurmaUC(codigoTurma, codigoUC, order)) {
-                cout << "Turma ou Unidade Curricular não encontrada!";
+                cout << "Turma ou Unidade Curricular não encontrada!\n";
                 this->listingStudentsMenu();
             }
             this->inputWait();
@@ -491,7 +491,7 @@ void Interface::occupationMenu(){
                 cin.ignore(INT_MAX, '\n');
             }
             if (!gestor.outputOcupaçãoTurma(codigoTurma)){
-                cout << "Turma não encontrada!";
+                cout << "Turma não encontrada!\n";
                 this->occupationMenu();
             }
             this->inputWait();
@@ -509,7 +509,7 @@ void Interface::occupationMenu(){
                 cin.ignore(INT_MAX, '\n');
             }
             if (!gestor.outputOcupaçãoUC(codigoUC)){
-                cout << "Unidade Curricular não encontrada!";
+                cout << "Unidade Curricular não encontrada!\n";
                 this->occupationMenu();
             }
             this->inputWait();
@@ -703,6 +703,7 @@ void Interface::requestMenu(){
                 cout << "Operação não permitida!\n";
                 this->requestMenu();
             }
+            cout << "Anulamento realizado com sucesso.\n";
             this->inputWait();
             break;}
         default:{

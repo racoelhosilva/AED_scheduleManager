@@ -744,19 +744,18 @@ bool Gestor::assessBalance(string idUC, string idTurma, string idTurmaAnterior =
             }
             if (current > maxOccupation) maxOccupation = current;
             if (current < minOccupation) minOccupation = current;
-
         }
     }
     int amplitude = maxOccupation - minOccupation;
     if (amplitude < 4){ return true; }
     if (amplitude == 4 && newOccupation != maxOccupation){ return true; }
-    if (idTurmaAnterior != ""){
+    if (newOccupation == minOccupation) { return true; }
+    if (idTurmaAnterior != "") {
+        // No caso de ser uma troca:
         if ((maxOccupation - newOccupation) > 4) {return true;}
-        // Se houver uma falha de balanço, dá prioridade a inserir nas turmas que não estão balançadas
-    }
-    else {
-        if ((oldOccupation - newOccupation) > 4){ return true;}
-        // Se houver uma falha de balanço, dá prioridade a trocar de uma turma com pelo menos mais 4 pessoas do que a nova
+        // Deixa inserir se for uma troca para uma turma que está com desbalanço (pouco estudantes)
+        else if ((oldOccupation - newOccupation) > 4){ return true;}
+        // Deixa inserir se a turma anterior tiver mais de mais de 4 do que a nova
     }
     return false;
 }
@@ -887,7 +886,6 @@ bool Gestor::procPedidoRemoção(int id, string codigoUC, string codigoTurma){
             break;
         }
     }
-    if (!assessBalance(turmas[tIdx].getcodigoUC(), turmas[tIdx].getcodigoTurma())) {cout << "ERRO: Pedido aumenta desequilíbrio entre as turmas.\n";return false;}
 
     estudantes[idx].setSchedule(newSchedule);
     for (auto t : turmas){
@@ -1169,10 +1167,10 @@ void Gestor::writeInvalidRequests(string fname){
  */
 void Gestor::writeStudentClasses(string fname) {
     ofstream fileWriter(fname);
-    fileWriter << "StudentCode,StudentName,UcCode,ClassCode\r";
+    fileWriter << "StudentCode,StudentName,UcCode,ClassCode\r\n";
     for (auto e : estudantes){
         for (auto t : e.getSchedule()){
-            fileWriter << e.getID() << ',' << e.getName() << ',' << t.getcodigoUC() << ',' << t.getcodigoTurma() << '\r';
+            fileWriter << e.getID() << ',' << e.getName() << ',' << t.getcodigoUC() << ',' << t.getcodigoTurma() << "\r\n";
         }
     }
     fileWriter.close();

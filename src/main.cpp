@@ -9,5 +9,3 @@ int main() {
     cout << "Error loading database files!!!\n";
     return 1;
 }
-
-
