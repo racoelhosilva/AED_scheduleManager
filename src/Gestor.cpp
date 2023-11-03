@@ -149,7 +149,8 @@ bool Gestor::outputHorárioEstudante(int id){
         for (auto aula : turma.getAulas()){
             horario.insert({aula, {turma.getcodigoUC(), turma.getcodigoTurma()}});
         }
-    }cout << "Horário do estudante: " << estudantes[idx].getName() << " (" << id << ")\n";
+    }
+    cout << "Horário do estudante: " << estudantes[idx].getName() << " (" << id << ")\n";
     printHorarios(horario);
     return true;
 }

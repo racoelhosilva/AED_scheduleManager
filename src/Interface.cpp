@@ -187,7 +187,7 @@ void Interface::scheduleMenu() {
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001"){
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -236,7 +236,7 @@ void Interface::listingMenu() {
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001"){
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -321,7 +321,7 @@ void Interface::listingStudentsMenu() {
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001") {
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001") {
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -352,7 +352,7 @@ void Interface::listingStudentsMenu() {
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001") {
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001") {
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -502,7 +502,7 @@ void Interface::occupationMenu(){
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001"){
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -572,7 +572,7 @@ void Interface::requestMenu(){
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001"){
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -610,7 +610,7 @@ void Interface::requestMenu(){
             cin >> codigoUC;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') || codigoUC == "UP001"){
+            while ((codigoUC.length() != 8 || codigoUC[1] != '.' || codigoUC[0] != 'L') && codigoUC != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUC;
                 cin.clear();
@@ -648,7 +648,7 @@ void Interface::requestMenu(){
             cin >> codigoUCAtual;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUCAtual.length() != 8 || codigoUCAtual[1] != '.' || codigoUCAtual[0] != 'L') || codigoUCAtual == "UP001"){
+            while ((codigoUCAtual.length() != 8 || codigoUCAtual[1] != '.' || codigoUCAtual[0] != 'L') && codigoUCAtual != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUCAtual;
                 cin.clear();
@@ -670,7 +670,7 @@ void Interface::requestMenu(){
             cin >> codigoUCNova;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
-            while ((codigoUCNova.length() != 8 || codigoUCNova[1] != '.' || codigoUCNova[0] != 'L') || codigoUCNova == "UP001"){
+            while ((codigoUCNova.length() != 8 || codigoUCNova[1] != '.' || codigoUCNova[0] != 'L') && codigoUCNova != "UP001"){
                 cout << "Input inválido. Código da Unidade Curricular: ";
                 cin >> codigoUCNova;
                 cin.clear();
