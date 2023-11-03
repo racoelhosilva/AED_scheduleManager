@@ -3,7 +3,9 @@
 #+BEGIN_QUOTE
 Project written in C++ to manage a dataset of Classes, Studentes and Schedules
 
-Created in October 2023 for AED (Algoritmos e Estruturas de Dados) [FEUP-L.EIC012]
+Created in October 2023 for AED (Algoritmos e Estruturas de Dados) [FEUP-L.EIC011]
+
+Class: 2LEIC01              Group: G15
 #+END_QUOTE
 
 *** Developers
