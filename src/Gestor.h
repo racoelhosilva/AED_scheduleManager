@@ -39,7 +39,9 @@ struct compareHorario{
     bool operator()(const pair<Aula,Turma> &a1, const pair<Aula,Turma> &a2) const {
         bool compareDia = a1.first.getDia() < a2.first.getDia();
         bool compareHora = a1.first.getDia() == a2.first.getDia() &&  a1.first.getHoraInicio() < a2.first.getHoraInicio();
-        return compareDia || compareHora;
+        bool compareUC = a1.first.getDia() == a2.first.getDia() &&  a1.first.getHoraInicio() == a2.first.getHoraInicio() && a1.second.getcodigoUC() < a2.second.getcodigoUC();
+        bool compareTurma = a1.first.getDia() == a2.first.getDia() &&  a1.first.getHoraInicio() == a2.first.getHoraInicio() && a1.second.getcodigoUC() == a2.second.getcodigoUC() && a1.second.getcodigoTurma() < a2.second.getcodigoTurma();
+        return compareDia || compareHora || compareUC || compareTurma;
     }
 };
 
