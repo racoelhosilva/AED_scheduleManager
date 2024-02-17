@@ -1,6 +1,8 @@
 <h1 align="center">AED - Schedule Manager</h1>
 
+><p align="center">
 > CLI utility to manage LEIC student's schedules as well as retrieve information about classes, courses and years.  
+></p>
 
 ## Goal of the Project
 
