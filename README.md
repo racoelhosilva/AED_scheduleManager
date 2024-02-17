@@ -1,6 +1,23 @@
 <h1 align="center">AED - Schedule Manager</h1>
 
-> CLI utility to manage LEIC student's schedules as well as retrieve information about classes, courses and years.
+> CLI utility to manage LEIC student's schedules as well as retrieve information about classes, courses and years.  
+
+## Goal of the Project
+
+#### Make use of different adequate Data Structures (vector, list, stack, queue) and Algorithms (sorting and searching) to store the data and perform various operations.
+
+## Implemented Features
+
+- Simple Command-Line Interface
+- Data loading from external CSV files
+- Schedule display per Student, Class and UC
+- Listing of Students (per Class, UC and Year)
+- Listing of Classes and UC
+- Occupations per Class, Year and UC
+- Request Operations (Remove, Insert, Switch, Undo, Process)
+- Total listing of Students, Classes and UC
+- Save changes in a CSV file
+- Save change history in a log file
 
 ---
 
