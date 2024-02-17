@@ -4,7 +4,7 @@
 
 ## Goal of the Project
 
-#### Make use of different adequate Data Structures (vector, list, stack, queue) and Algorithms (sorting and searching) to store the data and perform various operations.
+<h4 align="center"> Make use of different adequate Data Structures (vector, list, stack, queue) and Algorithms (sorting and searching) to store the data and perform various operations.</h4>
 
 ## Implemented Features
 
