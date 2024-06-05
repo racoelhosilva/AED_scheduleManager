@@ -25,4 +25,5 @@
 
 > Class: 2LEIC01 Group: G15  
 > Final Grade: 18.8  
+> Professors: Filipa Ramos  
 > Created in October 2023 for AED (Algoritmos e Estruturas de Dados) [FEUP-L.EIC011]  
